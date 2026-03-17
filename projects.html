@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects | Daniel Michael</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="main-navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">Daniel Michael</a>
+    <button class="nav-toggle" id="nav-toggle"><span></span><span></span><span></span></button>
+    <div class="nav-links" id="nav-links">
+      <a href="projects.html"  class="nav-btn">Projects</a>
+      <a href="labs.html"      class="nav-btn">Cyber Labs</a>
+      <a href="courses.html"   class="nav-btn">Courses</a>
+      <a href="terminal.html"  class="nav-btn">Terminal</a>
+      <a href="siem.html"      class="nav-btn">SIEM</a>
+      <a href="resume.html"    class="nav-btn">Resume</a>
+      <a href="contact.html"   class="nav-btn">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="container">
+    <div class="page-hero-bar"></div>
+    <h1 class="page-hero-title">Projects</h1>
+    <p class="page-hero-sub">
+      A collection of real cybersecurity tools built from scratch — each feeding
+      structured logs into a live SIEM dashboard.
+    </p>
+  </div>
+</div>
+
+<section>
+  <div class="container">
+
+    <!-- ── PROJECT 1: PASSWORD ANALYZER ───── -->
+    <div class="project-card mb-4" data-aos="fade-up">
+      <div class="row g-4 align-items-start">
+        <div class="col-lg-8">
+          <span class="section-label">Python · Cryptography · API</span>
+          <h2>🔐 Password Strength Analyzer</h2>
+          <p>
+            A command-line cybersecurity tool that scores password strength using
+            <strong style="color:var(--gold);">Shannon entropy calculations</strong>, multi-factor
+            character-set analysis, and an offline common-password dictionary. It also
+            performs live breach detection via the <strong style="color:var(--gold);">Have I Been Pwned API</strong>
+            using k-anonymity — meaning your real password is never transmitted.
+          </p>
+          <ul>
+            <li>Shannon entropy calculation (bits) for accurate strength measurement</li>
+            <li>Crack-time estimation for both offline GPU attacks and online throttled logins</li>
+            <li>HIBP Pwned Passwords API — k-anonymity breach detection</li>
+            <li>AI-style improvement suggestions and passphrase recommendations</li>
+            <li>Structured JSON log events → auto-uploaded to SIEM dashboard</li>
+          </ul>
+
+          <div class="tech-tags">
+            <span class="tech-tag">Python 3</span>
+            <span class="tech-tag">math</span>
+            <span class="tech-tag">re (Regex)</span>
+            <span class="tech-tag">hashlib</span>
+            <span class="tech-tag">requests</span>
+            <span class="tech-tag">HIBP API</span>
+            <span class="tech-tag">JSON Logging</span>
+          </div>
+
+          <div class="lab-status mt-3">
+            <strong>SIEM Integration</strong>
+            <ul>
+              <li>Emits <code style="color:var(--gold)">PASSWORD_ANALYSIS</code> events (INFO)</li>
+              <li>Escalates to <code style="color:var(--gold)">WEAK_PASSWORD</code> (WARN / ALERT)</li>
+              <li>Emits <code style="color:var(--gold)">BREACHED_PASSWORD</code> (ALERT) on HIBP match</li>
+              <li>Auto-uploads to <code style="color:var(--gold)">portfolio/data/logs_web.json</code> via GitHub API</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div style="background:var(--bg-panel);border:1px solid var(--border);border-radius:8px;padding:20px;font-family:var(--font-mono);font-size:0.78rem;color:var(--gold-soft);">
+            <p style="color:var(--gold);margin-bottom:8px;">$ python password_analyzer.py</p>
+            <p style="color:var(--text-muted);">Enter password: ••••••••••</p>
+            <br>
+            <p>Entropy:           78.14 bits</p>
+            <p>Rating:            STRONG</p>
+            <p>Common password?:  NO</p>
+            <p>Crack (GPU):       14.73 years</p>
+            <p>Crack (Online):    infinite</p>
+            <p>Breached:          Not found ✓</p>
+            <br>
+            <p style="color:#4ade80;">[OK] Logs uploaded.</p>
+          </div>
+          <div style="margin-top:12px;">
+            <span class="status-badge status-live">Live · SIEM Feed Active</span>
+          </div>
+          <a class="project-btn d-block text-center" href="https://github.com/danielmichael20208/password-strength-analyzer" target="_blank">
+            View on GitHub →
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PROJECT 2: PORT SCANNER ─────────── -->
+    <div class="project-card mb-4" data-aos="fade-up">
+      <div class="row g-4 align-items-start">
+        <div class="col-lg-8">
+          <span class="section-label">Python · Networking · Fingerprinting</span>
+          <h2>🛰️ Network Port Scanner</h2>
+          <p>
+            A Python TCP port scanner built from raw sockets. Goes beyond simple open/closed
+            detection by providing <strong style="color:var(--gold);">full port state enumeration</strong>,
+            service banner grabbing, TTL extraction, and basic OS fingerprinting — the same
+            workflow used by real network security engineers.
+          </p>
+          <ul>
+            <li>Full state enumeration: open · closed · refused · filtered · timeout · error</li>
+            <li>Banner grabbing for service identification (SSH, HTTP, SMB, RDP)</li>
+            <li>TTL-based OS fingerprinting (Linux vs Windows vs Cisco)</li>
+            <li>Configurable port list and scan timeout</li>
+            <li>Structured JSON events auto-pushed to SIEM pipeline</li>
+          </ul>
+
+          <div class="tech-tags">
+            <span class="tech-tag">Python 3</span>
+            <span class="tech-tag">socket</span>
+            <span class="tech-tag">TCP Connect</span>
+            <span class="tech-tag">Banner Grab</span>
+            <span class="tech-tag">OS Fingerprint</span>
+            <span class="tech-tag">JSON Logging</span>
+          </div>
+
+          <div class="lab-status mt-3">
+            <strong>SIEM Integration</strong>
+            <ul>
+              <li>Emits <code style="color:var(--gold)">PORT_OPEN</code> (WARN), <code style="color:var(--gold)">PORT_CLOSED</code> (INFO)</li>
+              <li>Emits <code style="color:var(--gold)">PORT_FILTERED</code> / <code style="color:var(--gold)">PORT_REFUSED</code> (WARN)</li>
+              <li>Context includes: host, port, state, service, TTL, OS guess, banner</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div style="background:var(--bg-panel);border:1px solid var(--border);border-radius:8px;padding:20px;font-family:var(--font-mono);font-size:0.78rem;color:var(--gold-soft);">
+            <p style="color:var(--gold);margin-bottom:8px;">$ python port_scanner.py</p>
+            <p style="color:var(--text-muted);">Target: 127.0.0.1</p>
+            <br>
+            <p style="color:#4ade80;">22/tcp  OPEN  SSH   OS=Linux</p>
+            <p style="color:var(--text-muted);">23/tcp  REFUSED</p>
+            <p style="color:var(--text-muted);">25/tcp  FILTERED</p>
+            <p style="color:#4ade80;">80/tcp  OPEN  HTTP  OS=Linux</p>
+            <p style="color:#4ade80;">443/tcp OPEN  HTTPS OS=Linux</p>
+            <p style="color:var(--text-muted);">3389/tcp TIMEOUT</p>
+            <br>
+            <p style="color:#4ade80;">[OK] Logs uploaded.</p>
+          </div>
+          <div style="margin-top:12px;">
+            <span class="status-badge status-live">Live · SIEM Feed Active</span>
+          </div>
+          <a class="project-btn d-block text-center" href="https://github.com/danielmichael20208/port-scanner" target="_blank">
+            View on GitHub →
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PROJECT 3: CYBERDOOR ────────────── -->
+    <div class="project-card mb-4" data-aos="fade-up">
+      <div class="row g-4 align-items-start">
+        <div class="col-lg-8">
+          <span class="section-label">Arduino · Embedded · Physical Security</span>
+          <h2>🔒 CyberDoor v1 — Arduino Access Control</h2>
+          <p>
+            A hardware security project simulating a real access control system. Users enter
+            a PIN on a 4×4 keypad; the system verifies it, controls a servo lock, drives
+            LED indicators, and sounds an alarm on failure. After 3 failed attempts, the
+            system enters a <strong style="color:var(--gold);">security lockdown mode</strong> and logs every event
+            with timestamps and severity levels — matching the same format as the SIEM pipeline.
+          </p>
+          <ul>
+            <li>Keypad PIN authentication with configurable correct PIN</li>
+            <li>Servo motor lock control (0° = locked, 90° = unlocked)</li>
+            <li>Red/green LED indicators + piezo buzzer alarm</li>
+            <li>3-strike lockdown with visual + audio alert sequence</li>
+            <li>Structured serial logging: [BOOT] [INFO] [WARN] [ALERT] [ACCESS]</li>
+            <li>Simulated in TinkerCAD Circuits; designed for real Arduino Uno</li>
+          </ul>
+
+          <div class="tech-tags">
+            <span class="tech-tag">Arduino C++</span>
+            <span class="tech-tag">Keypad.h</span>
+            <span class="tech-tag">Servo.h</span>
+            <span class="tech-tag">Hardware Security</span>
+            <span class="tech-tag">TinkerCAD Sim</span>
+            <span class="tech-tag">Structured Logging</span>
+          </div>
+
+          <div class="lab-status mt-3">
+            <strong>Future Integration</strong>
+            <ul>
+              <li>Python serial bridge will forward door events → SIEM JSON log</li>
+              <li>Planned WiFi module: Arduino → MQTT → Python → Dashboard</li>
+              <li>RFID card upgrade planned for Stage 2</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div style="background:var(--bg-panel);border:1px solid var(--border);border-radius:8px;padding:20px;font-family:var(--font-mono);font-size:0.78rem;color:var(--gold-soft);">
+            <p style="color:var(--gold);margin-bottom:8px;">Serial Monitor Output</p>
+            <p style="color:#60a5fa;">[BOOT] 0s - System armed</p>
+            <p style="color:var(--text-muted);">[INFO] 5s - PIN entered</p>
+            <p style="color:#f97316;">[ACCESS] 5s - DENIED</p>
+            <p style="color:#f97316;">[WARN] 5s - Failures: 1</p>
+            <p style="color:var(--text-muted);">...</p>
+            <p style="color:#ef4444;">[ALERT] 15s - LOCKDOWN</p>
+            <p style="color:var(--text-muted);">...</p>
+            <p style="color:#4ade80;">[ACCESS] 30s - GRANTED</p>
+            <p style="color:#4ade80;">[INFO] 30s - Door unlocked</p>
+          </div>
+          <div style="margin-top:12px;">
+            <span class="status-badge status-progress">Prototype · TinkerCAD Sim</span>
+          </div>
+          <a class="project-btn d-block text-center" href="terminal.html">
+            Run in Terminal →
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PROJECT 4: SIEM DASHBOARD ────────── -->
+    <div class="project-card mb-4" data-aos="fade-up">
+      <div class="row g-4 align-items-start">
+        <div class="col-lg-8">
+          <span class="section-label">JavaScript · Chart.js · GitHub API</span>
+          <h2>📊 DanielOS Cyber SIEM Dashboard</h2>
+          <p>
+            A live security analytics dashboard powered by JSON event logs from the password analyzer,
+            port scanner, and CyberDoor tools. Includes Chart.js visualizations, a security score engine,
+            alert detection rules, time-based filtering, keyword search, log export, and an auto-refresh
+            toggle — all without a backend server.
+          </p>
+          <ul>
+            <li>Security score (0–100) calculated from event severity weights</li>
+            <li>Charts: events by level (bar), events by source (pie), timeline (line)</li>
+            <li>Detection rules: port scanning activity, brute force, weak credentials</li>
+            <li>CLI-style filters: <code style="color:var(--gold)">logs source=scan level=warn since=2h</code></li>
+            <li>Export to CSV and JSONL formats directly in browser</li>
+            <li>GitHub API auto-upload pipeline from local Python tools</li>
+          </ul>
+
+          <div class="tech-tags">
+            <span class="tech-tag">JavaScript</span>
+            <span class="tech-tag">Chart.js</span>
+            <span class="tech-tag">GitHub API</span>
+            <span class="tech-tag">Base64 Encoding</span>
+            <span class="tech-tag">JSON</span>
+            <span class="tech-tag">GitHub Pages</span>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div style="background:var(--bg-panel);border:1px solid var(--border);border-radius:8px;padding:20px;font-family:var(--font-mono);font-size:0.78rem;color:var(--gold-soft);">
+            <p style="color:var(--gold);margin-bottom:8px;">Terminal Query Examples</p>
+            <p>logs</p>
+            <p>logs source=scan</p>
+            <p>logs level=alert</p>
+            <p>logs since=1h</p>
+            <p>logs contains=ssh</p>
+            <p>logs source=pwa level=warn</p>
+            <p>logs export csv</p>
+            <p>alerts</p>
+            <p>status</p>
+          </div>
+          <div style="margin-top:12px;">
+            <span class="status-badge status-live">Live on Portfolio</span>
+          </div>
+          <a class="project-btn d-block text-center" href="siem.html">
+            View Dashboard →
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PROJECT 5: INTERACTIVE TERMINAL ─── -->
+    <div class="project-card mb-4" data-aos="fade-up">
+      <div class="row g-4 align-items-start">
+        <div class="col-lg-8">
+          <span class="section-label">JavaScript · SIEM · UX</span>
+          <h2>💻 DanielOS Cyber Terminal</h2>
+          <p>
+            A browser-based interactive terminal that simulates a personal cyber OS.
+            Supports project simulation commands, real SIEM log queries,
+            export tools, alert rule detection, and a virtual filesystem — all running
+            in-browser with no backend.
+          </p>
+          <ul>
+            <li>Project simulation: <code style="color:var(--gold)">python password_analyzer.py</code>, <code style="color:var(--gold)">python port_scanner.py</code></li>
+            <li>Real SIEM queries that fetch and filter <code style="color:var(--gold)">logs_web.json</code></li>
+            <li>Alert rule engine with detection for port scanning, weak passwords, door brute force</li>
+            <li>Log export commands: CSV and JSONL</li>
+            <li>Virtual filesystem: <code style="color:var(--gold)">ls</code>, <code style="color:var(--gold)">pwd</code>, <code style="color:var(--gold)">run [file]</code></li>
+          </ul>
+
+          <div class="tech-tags">
+            <span class="tech-tag">Vanilla JS</span>
+            <span class="tech-tag">Fetch API</span>
+            <span class="tech-tag">JSON Parsing</span>
+            <span class="tech-tag">Custom CLI Parser</span>
+          </div>
+        </div>
+        <div class="col-lg-4 d-flex flex-column gap-3">
+          <div style="margin-top:0;">
+            <span class="status-badge status-live">Live on Portfolio</span>
+          </div>
+          <a class="project-btn d-block text-center" href="terminal.html">
+            Open Terminal →
+          </a>
+          <a class="project-btn d-block text-center" href="https://github.com/danielmichael20208" target="_blank">
+            GitHub Profile →
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /container -->
+</section>
+
+<footer>
+  <p>© 2026 <span>Daniel Michael</span> ·
+    <a href="https://github.com/danielmichael20208" target="_blank">github.com/danielmichael20208</a>
+  </p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+AOS.init({ duration: 900, once: true, easing: 'ease-out-cubic', offset: 60 });
+document.getElementById('nav-toggle').addEventListener('click', () => {
+  document.getElementById('nav-links').classList.toggle('open');
+});
+const current = location.pathname.split('/').pop() || 'index.html';
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  if (btn.getAttribute('href') === current) btn.classList.add('active');
+});
+</script>
+</body>
+</html>
