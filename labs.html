@@ -1,108 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cyber Labs | Daniel Michael</title>
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <style>
-    .labs-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1.25rem;
-      margin-bottom: 5rem;
-    }
+    .labs-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.2rem; margin-bottom:5rem; }
+    .lab-card { border:1px solid rgba(201,168,76,.12); background:var(--obsidian-2); padding:1.6rem; position:relative; transition:transform .3s,border-color .3s; overflow:hidden; }
+    .lab-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:linear-gradient(to right,transparent,var(--gold-dim),transparent); opacity:0; transition:opacity .3s; }
+    .lab-card:hover { transform:translateY(-3px); border-color:rgba(201,168,76,.3); }
+    .lab-card:hover::after { opacity:1; }
+    .lab-top { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:.9rem; }
+    .lab-name { font-family:var(--font-display); font-size:.95rem; font-weight:600; letter-spacing:.04em; color:var(--white); }
+    .lab-desc { font-size:.82rem; line-height:1.7; color:#8a8780; margin-bottom:.9rem; }
+    .lab-tags { display:flex; flex-wrap:wrap; gap:.35rem; }
+    .tag { font-family:var(--font-mono); font-size:.57rem; letter-spacing:.1em; padding:.13rem .45rem; background:rgba(201,168,76,.05); border:1px solid rgba(201,168,76,.13); color:var(--gold-dim); text-transform:uppercase; }
 
-    .lab-card {
-      border: 1px solid rgba(201,168,76,0.12);
-      background: var(--obsidian-2);
-      padding: 1.75rem;
-      position: relative;
-      transition: transform 0.3s, border-color 0.3s;
-      overflow: hidden;
-    }
-    .lab-card::after {
-      content: '';
-      position: absolute; bottom: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
-      opacity: 0; transition: opacity 0.3s;
-    }
-    .lab-card:hover { transform: translateY(-3px); border-color: rgba(201,168,76,0.3); }
-    .lab-card:hover::after { opacity: 1; }
-
-    .lab-card-top {
-      display: flex; align-items: flex-start; justify-content: space-between;
-      margin-bottom: 1rem;
-    }
-    .lab-name {
-      font-family: var(--font-display);
-      font-size: 1rem; font-weight: 600; letter-spacing: 0.04em; color: var(--white);
-    }
-    .lab-desc {
-      font-size: 0.83rem; line-height: 1.7; color: #8a8780; margin-bottom: 1rem;
-    }
-    .lab-tags {
-      display: flex; flex-wrap: wrap; gap: 0.4rem;
-    }
-    .tag {
-      font-family: var(--font-mono);
-      font-size: 0.58rem; letter-spacing: 0.1em;
-      padding: 0.15rem 0.5rem;
-      background: rgba(201,168,76,0.05);
-      border: 1px solid rgba(201,168,76,0.14);
-      color: var(--gold-dim); text-transform: uppercase;
-    }
-
-    /* Certification pipeline */
-    .cert-section { margin-top: 1rem; }
-    .cert-stage {
-      border: 1px solid rgba(201,168,76,0.1);
-      background: var(--obsidian-2);
-      margin-bottom: 1.25rem;
-      overflow: hidden;
-    }
-    .cert-stage-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1rem 1.5rem;
-      background: rgba(201,168,76,0.04);
-      border-bottom: 1px solid rgba(201,168,76,0.08);
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .cert-stage-header:hover { background: rgba(201,168,76,0.07); }
-    .cert-stage-name {
-      font-family: var(--font-display);
-      font-size: 0.9rem; font-weight: 600; letter-spacing: 0.06em; color: var(--white);
-    }
-    .cert-stage-body { padding: 1.25rem 1.5rem; }
-    .cert-item {
-      display: flex; align-items: center; gap: 0.75rem;
-      padding: 0.6rem 0;
-      border-bottom: 1px solid rgba(201,168,76,0.05);
-      font-family: var(--font-mono); font-size: 0.78rem; color: #9a9790;
-    }
-    .cert-item:last-child { border-bottom: none; }
-    .cert-dot {
-      width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
-    }
-    .dot-active   { background: var(--gold);  box-shadow: 0 0 6px var(--gold); }
-    .dot-planned  { background: var(--muted); }
-    .dot-future   { background: #3a3830; border: 1px solid #5a5850; }
-    .cert-name { flex: 1; }
-    .cert-note {
-      font-size: 0.62rem; color: var(--muted); letter-spacing: 0.08em;
-    }
-
-    /* Stage status colors */
-    .stage-s1 .cert-stage-header { border-left: 3px solid var(--gold); }
-    .stage-s2 .cert-stage-header { border-left: 3px solid #7a5a90; }
-    .stage-s3 .cert-stage-header { border-left: 3px solid #4a5a7a; }
+    .cert-section { margin-top:1rem; }
+    .cert-stage { border:1px solid rgba(201,168,76,.1); background:var(--obsidian-2); margin-bottom:1.1rem; overflow:hidden; }
+    .cert-head { display:flex; align-items:center; justify-content:space-between; padding:.9rem 1.4rem; background:rgba(201,168,76,.04); border-bottom:1px solid rgba(201,168,76,.08); }
+    .cert-name { font-family:var(--font-display); font-size:.88rem; font-weight:600; letter-spacing:.06em; color:var(--white); }
+    .cert-body { padding:1.1rem 1.4rem; }
+    .cert-item { display:flex; align-items:center; gap:.7rem; padding:.55rem 0; border-bottom:1px solid rgba(201,168,76,.05); font-family:var(--font-mono); font-size:.76rem; color:#9a9790; }
+    .cert-item:last-child { border-bottom:none; }
+    .c-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+    .cd-active  { background:var(--gold);  box-shadow:0 0 6px var(--gold); }
+    .cd-planned { background:var(--muted); }
+    .cd-future  { background:#3a3830; border:1px solid #5a5850; }
+    .cert-item span:last-child { margin-left:auto; font-size:.6rem; color:var(--muted); letter-spacing:.08em; }
+    .s1-head { border-left:3px solid var(--gold); }
+    .s2-head { border-left:3px solid #7a5a90; }
+    .s3-head { border-left:3px solid #4a5a7a; }
   </style>
 </head>
 <body>
-
   <nav>
     <a href="index.html" class="nav-logo">DM</a>
     <ul class="nav-links">
@@ -116,214 +48,65 @@
 
   <div class="page-hero">
     <div class="page-hero-grid"></div>
-    <div class="page-hero-content">
+    <div class="page-hero-inner">
       <p class="page-tag">04 // Labs</p>
-      <h1 class="page-title">Hands-On <span>Cyber Training</span></h1>
-      <p class="page-desc">Learning by doing — running labs, solving CTFs, analyzing traffic, and simulating attacks. Web exploitation, Linux privilege escalation, recon, and more.</p>
+      <h1 class="page-title">Cyber <span>Labs</span></h1>
+      <p class="page-desc">Hands-on practice — CTFs, traffic analysis, Python tools, and hardware security. Learning by doing.</p>
     </div>
   </div>
 
   <div class="page-content">
-
-    <!-- Labs Grid -->
-    <div class="section-label">Active Labs</div>
+    <p class="section-label reveal">Active Labs</p>
     <div class="labs-grid reveal">
-
-      <div class="lab-card">
-        <div class="lab-card-top">
-          <span class="lab-name">TryHackMe</span>
-          <span class="badge badge-active">Active</span>
-        </div>
-        <p class="lab-desc">Structured learning path covering networking, web exploitation, privilege escalation, and Linux fundamentals through guided rooms and challenges.</p>
-        <div class="lab-tags">
-          <span class="tag">Linux</span><span class="tag">Networking</span><span class="tag">Web</span><span class="tag">Priv-Esc</span>
-        </div>
-      </div>
-
-      <div class="lab-card">
-        <div class="lab-card-top">
-          <span class="lab-name">HackTheBox Academy</span>
-          <span class="badge badge-active">In Progress</span>
-        </div>
-        <p class="lab-desc">Offensive labs focusing on enumeration, exploitation, and post-exploitation against hardened target machines.</p>
-        <div class="lab-tags">
-          <span class="tag">Enumeration</span><span class="tag">Exploitation</span><span class="tag">Post-Exploit</span>
-        </div>
-      </div>
-
-      <div class="lab-card">
-        <div class="lab-card-top">
-          <span class="lab-name">Wireshark Traffic Analysis</span>
-          <span class="badge badge-complete">Complete</span>
-        </div>
-        <p class="lab-desc">Packet inspection, protocol dissection, conversation tracking, and suspicious activity detection in captured network traffic.</p>
-        <div class="lab-tags">
-          <span class="tag">Wireshark</span><span class="tag">PCAP</span><span class="tag">Protocols</span><span class="tag">Blue Team</span>
-        </div>
-      </div>
-
-      <div class="lab-card">
-        <div class="lab-card-top">
-          <span class="lab-name">Python Security Automation</span>
-          <span class="badge badge-active">Active</span>
-        </div>
-        <p class="lab-desc">Writing tools for scanning, entropy analysis, and event logging across Linux and Windows hosts. Feeds directly into the SIEM dashboard.</p>
-        <div class="lab-tags">
-          <span class="tag">Python</span><span class="tag">Automation</span><span class="tag">Scripting</span><span class="tag">SIEM</span>
-        </div>
-      </div>
-
-      <div class="lab-card">
-        <div class="lab-card-top">
-          <span class="lab-name">Security SIEM Dashboard</span>
-          <span class="badge badge-live">Live</span>
-        </div>
-        <p class="lab-desc">Parses structured JSON logs and visualizes alerts, timelines, and severity levels for Blue Team triage and analysis operations.</p>
-        <div class="lab-tags">
-          <span class="tag">SIEM</span><span class="tag">JSON</span><span class="tag">Blue Team</span><span class="tag">Visualization</span>
-        </div>
-      </div>
-
-      <div class="lab-card">
-        <div class="lab-card-top">
-          <span class="lab-name">Arduino CyberDoor v1</span>
-          <span class="badge badge-proto">Prototype</span>
-        </div>
-        <p class="lab-desc">Physical access control system: keypad → PIN verification → servo lock → alert logging + brute-force lockout. Embedded security research.</p>
-        <div class="lab-tags">
-          <span class="tag">Arduino</span><span class="tag">Embedded</span><span class="tag">Physical</span><span class="tag">Hardware</span>
-        </div>
-      </div>
-
-      <div class="lab-card">
-        <div class="lab-card-top">
-          <span class="lab-name">PicoCTF</span>
-          <span class="badge badge-active">In Progress</span>
-        </div>
-        <p class="lab-desc">Carnegie Mellon's beginner-to-advanced CTF platform covering cryptography, web exploitation, forensics, reverse engineering, and binary exploitation.</p>
-        <div class="lab-tags">
-          <span class="tag">CTF</span><span class="tag">Crypto</span><span class="tag">Forensics</span><span class="tag">RE</span>
-        </div>
-      </div>
-
-      <div class="lab-card">
-        <div class="lab-card-top">
-          <span class="lab-name">OverTheWire · Bandit</span>
-          <span class="badge badge-active">In Progress</span>
-        </div>
-        <p class="lab-desc">Linux wargame focused on command-line navigation, file permissions, SSH tunneling, and scripting. Core foundational skill-builder.</p>
-        <div class="lab-tags">
-          <span class="tag">Linux</span><span class="tag">Bash</span><span class="tag">SSH</span><span class="tag">CLI</span>
-        </div>
-      </div>
-
+      <div class="lab-card"><div class="lab-top"><span class="lab-name">TryHackMe</span><span class="badge badge-active">Active</span></div><p class="lab-desc">Structured learning path covering networking, web exploitation, privilege escalation, and Linux fundamentals.</p><div class="lab-tags"><span class="tag">Linux</span><span class="tag">Networking</span><span class="tag">Web</span><span class="tag">Priv-Esc</span></div></div>
+      <div class="lab-card"><div class="lab-top"><span class="lab-name">HackTheBox Academy</span><span class="badge badge-active">In Progress</span></div><p class="lab-desc">Offensive labs focused on enumeration, exploitation, and post-exploitation against hardened systems.</p><div class="lab-tags"><span class="tag">Enumeration</span><span class="tag">Exploitation</span><span class="tag">Post-Exploit</span></div></div>
+      <div class="lab-card"><div class="lab-top"><span class="lab-name">Wireshark Traffic Analysis</span><span class="badge badge-complete">Complete</span></div><p class="lab-desc">Packet inspection, protocol dissection, and suspicious activity detection in captured network traffic.</p><div class="lab-tags"><span class="tag">Wireshark</span><span class="tag">PCAP</span><span class="tag">Protocols</span></div></div>
+      <div class="lab-card"><div class="lab-top"><span class="lab-name">Python Security Automation</span><span class="badge badge-active">Active</span></div><p class="lab-desc">Writing tools for scanning, entropy analysis, and event logging. Feeds directly into the SIEM dashboard.</p><div class="lab-tags"><span class="tag">Python</span><span class="tag">Automation</span><span class="tag">SIEM</span></div></div>
+      <div class="lab-card"><div class="lab-top"><span class="lab-name">Security SIEM Dashboard</span><span class="badge badge-live">Live</span></div><p class="lab-desc">Parses structured JSON logs and visualizes alerts, timelines, and severity levels for Blue Team analysis.</p><div class="lab-tags"><span class="tag">SIEM</span><span class="tag">JSON</span><span class="tag">Blue Team</span></div></div>
+      <div class="lab-card"><div class="lab-top"><span class="lab-name">Arduino CyberDoor v1</span><span class="badge badge-proto">Prototype</span></div><p class="lab-desc">Physical access control: keypad → PIN verification → servo lock → alert logging + lockout rules.</p><div class="lab-tags"><span class="tag">Arduino</span><span class="tag">Embedded</span><span class="tag">Hardware</span></div></div>
+      <div class="lab-card"><div class="lab-top"><span class="lab-name">PicoCTF</span><span class="badge badge-active">In Progress</span></div><p class="lab-desc">CMU's CTF platform covering cryptography, web exploitation, forensics, and reverse engineering.</p><div class="lab-tags"><span class="tag">CTF</span><span class="tag">Crypto</span><span class="tag">Forensics</span><span class="tag">RE</span></div></div>
+      <div class="lab-card"><div class="lab-top"><span class="lab-name">OverTheWire · Bandit</span><span class="badge badge-active">In Progress</span></div><p class="lab-desc">Linux wargame focused on CLI navigation, file permissions, SSH tunneling, and scripting.</p><div class="lab-tags"><span class="tag">Linux</span><span class="tag">Bash</span><span class="tag">SSH</span></div></div>
     </div>
 
-    <!-- Cert Pipeline -->
-    <div class="section-label reveal">Certification Pipeline</div>
+    <p class="section-label reveal">Certification Pipeline</p>
     <div class="cert-section reveal">
-
-      <div class="cert-stage stage-s1">
-        <div class="cert-stage-header">
-          <span class="cert-stage-name">Stage 1 — Foundation</span>
-          <span class="badge badge-active">In Progress</span>
-        </div>
-        <div class="cert-stage-body">
-          <div class="cert-item">
-            <span class="cert-dot dot-active"></span>
-            <span class="cert-name">CompTIA Network+</span>
-            <span class="cert-note">Networking & Infrastructure</span>
-          </div>
-          <div class="cert-item">
-            <span class="cert-dot dot-active"></span>
-            <span class="cert-name">Linux Essentials (LPIC/NDG)</span>
-            <span class="cert-note">CLI & OS Fundamentals</span>
-          </div>
-          <div class="cert-item">
-            <span class="cert-dot dot-active"></span>
-            <span class="cert-name">Google Cybersecurity Certificate</span>
-            <span class="cert-note">Google / Coursera</span>
-          </div>
+      <div class="cert-stage">
+        <div class="cert-head s1-head"><span class="cert-name">Stage 1 — Foundation</span><span class="badge badge-active">In Progress</span></div>
+        <div class="cert-body">
+          <div class="cert-item"><span class="c-dot cd-active"></span>CompTIA Network+<span>Networking & Infrastructure</span></div>
+          <div class="cert-item"><span class="c-dot cd-active"></span>Linux Essentials (LPIC/NDG)<span>CLI & OS Fundamentals</span></div>
+          <div class="cert-item"><span class="c-dot cd-active"></span>Google Cybersecurity Certificate<span>Google / Coursera</span></div>
         </div>
       </div>
-
-      <div class="cert-stage stage-s2">
-        <div class="cert-stage-header">
-          <span class="cert-stage-name">Stage 2 — Security Core</span>
-          <span class="badge badge-planned">Planned</span>
-        </div>
-        <div class="cert-stage-body">
-          <div class="cert-item">
-            <span class="cert-dot dot-planned"></span>
-            <span class="cert-name">CompTIA Security+</span>
-            <span class="cert-note">Industry Baseline</span>
-          </div>
-          <div class="cert-item">
-            <span class="cert-dot dot-planned"></span>
-            <span class="cert-name">eJPT — Junior Penetration Tester</span>
-            <span class="cert-note">INE Security</span>
-          </div>
-          <div class="cert-item">
-            <span class="cert-dot dot-planned"></span>
-            <span class="cert-name">Azure AZ-900</span>
-            <span class="cert-note">Cloud Fundamentals</span>
-          </div>
-          <div class="cert-item">
-            <span class="cert-dot dot-planned"></span>
-            <span class="cert-name">Splunk Core User / Analyst</span>
-            <span class="cert-note">SIEM Operations</span>
-          </div>
+      <div class="cert-stage">
+        <div class="cert-head s2-head"><span class="cert-name">Stage 2 — Security Core</span><span class="badge badge-planned">Planned</span></div>
+        <div class="cert-body">
+          <div class="cert-item"><span class="c-dot cd-planned"></span>CompTIA Security+<span>Industry Baseline</span></div>
+          <div class="cert-item"><span class="c-dot cd-planned"></span>eJPT — Junior Penetration Tester<span>INE Security</span></div>
+          <div class="cert-item"><span class="c-dot cd-planned"></span>Azure AZ-900<span>Cloud Fundamentals</span></div>
+          <div class="cert-item"><span class="c-dot cd-planned"></span>Splunk Core User / Analyst<span>SIEM Operations</span></div>
         </div>
       </div>
-
-      <div class="cert-stage stage-s3">
-        <div class="cert-stage-header">
-          <span class="cert-stage-name">Stage 3 — Specialization</span>
-          <span class="badge badge-planned">Future</span>
-        </div>
-        <div class="cert-stage-body">
-          <div class="cert-item">
-            <span class="cert-dot dot-future"></span>
-            <span class="cert-name">eWPT / eWPTX</span>
-            <span class="cert-note">Web App Pentesting</span>
-          </div>
-          <div class="cert-item">
-            <span class="cert-dot dot-future"></span>
-            <span class="cert-name">CCNA Security / CyberOps</span>
-            <span class="cert-note">Cisco</span>
-          </div>
-          <div class="cert-item">
-            <span class="cert-dot dot-future"></span>
-            <span class="cert-name">OSCP</span>
-            <span class="cert-note">Offensive Security — Stretch Goal</span>
-          </div>
-          <div class="cert-item">
-            <span class="cert-dot dot-future"></span>
-            <span class="cert-name">GSEC / GCIA (SANS)</span>
-            <span class="cert-note">Advanced — Stretch Goal</span>
-          </div>
+      <div class="cert-stage">
+        <div class="cert-head s3-head"><span class="cert-name">Stage 3 — Specialization</span><span class="badge badge-planned">Future</span></div>
+        <div class="cert-body">
+          <div class="cert-item"><span class="c-dot cd-future"></span>eWPT / eWPTX<span>Web App Pentesting</span></div>
+          <div class="cert-item"><span class="c-dot cd-future"></span>CCNA Security / CyberOps<span>Cisco</span></div>
+          <div class="cert-item"><span class="c-dot cd-future"></span>OSCP<span>Stretch Goal</span></div>
+          <div class="cert-item"><span class="c-dot cd-future"></span>GSEC / GCIA (SANS)<span>Stretch Goal</span></div>
         </div>
       </div>
-
     </div>
   </div>
 
   <footer>
     <span class="footer-name">Daniel Michael</span>
-    <div class="footer-links">
-      <a href="index.html">Home</a>
-      <a href="projects.html">Projects</a>
-      <a href="contact.html">Contact</a>
-      <a href="https://github.com/danielmichael20208" target="_blank">GitHub</a>
-    </div>
+    <div class="footer-links"><a href="index.html">Home</a><a href="projects.html">Projects</a><a href="contact.html">Contact</a><a href="https://github.com/danielmichael20208" target="_blank">GitHub</a></div>
     <span class="footer-copy">© 2026 — All rights reserved</span>
   </footer>
-
   <script>
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.05 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible');}),{threshold:.05});
+    document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
   </script>
 </body>
 </html>

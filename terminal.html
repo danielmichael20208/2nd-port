@@ -1,143 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Terminal | Daniel Michael</title>
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <style>
-    .terminal-page {
-      min-height: 100vh;
-      display: flex; flex-direction: column;
-      padding-top: 4.5rem;
-    }
-    .terminal-header {
-      padding: 2rem 4rem 1.5rem;
-      border-bottom: 1px solid rgba(201,168,76,0.08);
-    }
-    .terminal-header-inner {
-      max-width: 1100px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .t-page-title {
-      font-family: var(--font-display);
-      font-size: 1.4rem; font-weight: 600;
-      letter-spacing: 0.06em; color: var(--white);
-    }
-    .t-page-title span { color: var(--gold); }
-    .t-hint {
-      font-family: var(--font-mono);
-      font-size: 0.68rem; color: var(--muted);
-      letter-spacing: 0.1em;
-    }
-    .t-hint span { color: var(--gold-dim); }
-
-    /* Terminal window */
-    .terminal-wrap {
-      flex: 1;
-      max-width: 1100px; margin: 0 auto;
-      width: 100%; padding: 2rem 4rem 4rem;
-    }
-    .terminal-window {
-      background: #050608;
-      border: 1px solid rgba(201,168,76,0.2);
-      height: calc(100vh - 260px);
-      min-height: 500px;
-      display: flex; flex-direction: column;
-      box-shadow: 0 0 60px rgba(201,168,76,0.04);
-    }
-    .terminal-titlebar {
-      background: var(--obsidian-3);
-      padding: 0.75rem 1.2rem;
-      display: flex; align-items: center; gap: 0.5rem;
-      border-bottom: 1px solid rgba(201,168,76,0.1);
-      flex-shrink: 0;
-    }
-    .dot { width: 10px; height: 10px; border-radius: 50%; cursor: pointer; }
-    .dot-r { background: #ff5f56; } .dot-r:hover { background: #ff3a30; }
-    .dot-y { background: #ffbd2e; } .dot-y:hover { background: #ffaa00; }
-    .dot-g { background: #27c93f; } .dot-g:hover { background: #20b035; }
-    .t-bar-title {
-      margin: 0 auto;
-      font-family: var(--font-mono); font-size: 0.65rem;
-      letter-spacing: 0.15em; color: var(--muted);
-    }
-    .t-bar-status {
-      font-family: var(--font-mono); font-size: 0.6rem;
-      color: var(--green); letter-spacing: 0.1em;
-    }
-
-    /* Output area */
-    #terminal-output {
-      flex: 1; overflow-y: auto;
-      padding: 1.5rem 2rem;
-      font-family: var(--font-mono);
-      font-size: 0.82rem; line-height: 1.9;
-      scroll-behavior: smooth;
-    }
-    #terminal-output::-webkit-scrollbar { width: 4px; }
-    #terminal-output::-webkit-scrollbar-track { background: transparent; }
-    #terminal-output::-webkit-scrollbar-thumb { background: var(--gold-dim); }
-
-    .t-line { display: block; white-space: pre-wrap; word-break: break-word; }
-    .t-prompt  { color: var(--gold); }
-    .t-input-echo { color: var(--white); }
-    .t-success { color: var(--green); }
-    .t-error   { color: #dc6060; }
-    .t-info    { color: var(--muted); }
-    .t-gold    { color: var(--gold); }
-    .t-header  { color: var(--gold-light); font-weight: bold; }
-    .t-dim     { color: #4a4840; }
-    .t-blank   { display: block; height: 0.5rem; }
-
-    /* Input row */
-    .terminal-input-row {
-      display: flex; align-items: center;
-      padding: 0.75rem 2rem;
-      border-top: 1px solid rgba(201,168,76,0.08);
-      background: #050608;
-      flex-shrink: 0;
-    }
-    .t-input-prompt {
-      font-family: var(--font-mono); font-size: 0.82rem;
-      color: var(--gold); white-space: nowrap; margin-right: 0.5rem;
-    }
-    #cmd-input {
-      flex: 1;
-      background: transparent; border: none; outline: none;
-      font-family: var(--font-mono); font-size: 0.82rem;
-      color: var(--white); caret-color: var(--gold);
-      letter-spacing: 0.02em;
-    }
-
-    /* Quick commands */
-    .quickcmds {
-      padding: 0.75rem 4rem;
-      max-width: 1100px; margin: 0 auto; width: 100%;
-      display: flex; gap: 0.5rem; flex-wrap: wrap;
-    }
-    .qcmd {
-      font-family: var(--font-mono); font-size: 0.65rem;
-      letter-spacing: 0.1em; text-transform: lowercase;
-      padding: 0.3rem 0.8rem;
-      border: 1px solid rgba(201,168,76,0.2);
-      color: var(--gold-dim); background: transparent;
-      cursor: pointer; transition: all 0.2s;
-    }
-    .qcmd:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.05); }
-
-    @media (max-width: 768px) {
-      .terminal-header { padding: 1.5rem; }
-      .terminal-wrap { padding: 1rem 1.5rem 2rem; }
-      .quickcmds { padding: 0.5rem 1.5rem; }
-      #terminal-output { padding: 1rem 1rem; }
-      .terminal-input-row { padding: 0.6rem 1rem; }
-    }
+    .terminal-page { min-height:100vh; display:flex; flex-direction:column; padding-top:4.5rem; }
+    .t-header { padding:2rem 4rem 1.5rem; border-bottom:1px solid rgba(201,168,76,.08); }
+    .t-header-inner { max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; }
+    .t-page-title { font-family:var(--font-display); font-size:1.4rem; font-weight:600; letter-spacing:.06em; color:var(--white); }
+    .t-page-title span { color:var(--gold); }
+    .t-hint { font-family:var(--font-mono); font-size:.67rem; color:var(--muted); letter-spacing:.1em; }
+    .t-hint span { color:var(--gold-dim); }
+    .t-wrap { flex:1; max-width:1100px; margin:0 auto; width:100%; padding:2rem 4rem 4rem; }
+    .t-window { background:#050608; border:1px solid rgba(201,168,76,.2); height:calc(100vh - 260px); min-height:480px; display:flex; flex-direction:column; box-shadow:0 0 60px rgba(201,168,76,.04); }
+    .t-titlebar { background:var(--obsidian-3); padding:.7rem 1.2rem; display:flex; align-items:center; gap:.5rem; border-bottom:1px solid rgba(201,168,76,.1); flex-shrink:0; }
+    .dot { width:10px; height:10px; border-radius:50%; }
+    .dr { background:#ff5f56; } .dy { background:#ffbd2e; } .dg { background:#27c93f; }
+    .t-bar-title { margin:0 auto; font-family:var(--font-mono); font-size:.63rem; letter-spacing:.15em; color:var(--muted); }
+    .t-bar-status { font-family:var(--font-mono); font-size:.58rem; color:var(--green); letter-spacing:.1em; }
+    #t-out { flex:1; overflow-y:auto; padding:1.4rem 2rem; font-family:var(--font-mono); font-size:.8rem; line-height:1.9; scroll-behavior:smooth; }
+    #t-out::-webkit-scrollbar { width:3px; }
+    #t-out::-webkit-scrollbar-thumb { background:var(--gold-dim); }
+    .tl { display:block; white-space:pre-wrap; word-break:break-word; }
+    .tp { color:var(--gold); } .ts { color:var(--green); } .te { color:#dc6060; } .ti { color:var(--muted); } .tg { color:var(--gold); } .td { color:#4a4840; }
+    .t-input-row { display:flex; align-items:center; padding:.7rem 2rem; border-top:1px solid rgba(201,168,76,.08); background:#050608; flex-shrink:0; }
+    .t-in-prompt { font-family:var(--font-mono); font-size:.8rem; color:var(--gold); white-space:nowrap; margin-right:.5rem; }
+    #cmd { flex:1; background:transparent; border:none; outline:none; font-family:var(--font-mono); font-size:.8rem; color:var(--white); caret-color:var(--gold); }
+    .quickcmds { padding:.7rem 4rem; max-width:1100px; margin:0 auto; width:100%; display:flex; gap:.5rem; flex-wrap:wrap; }
+    .qcmd { font-family:var(--font-mono); font-size:.63rem; letter-spacing:.1em; padding:.28rem .75rem; border:1px solid rgba(201,168,76,.2); color:var(--gold-dim); background:transparent; cursor:pointer; transition:all .2s; }
+    .qcmd:hover { border-color:var(--gold); color:var(--gold); background:rgba(201,168,76,.05); }
+    @media (max-width:768px) { .t-header,.t-wrap,.quickcmds { padding-left:1.5rem; padding-right:1.5rem; } #t-out,.t-input-row { padding-left:1rem; padding-right:1rem; } }
   </style>
 </head>
 <body>
-
   <nav>
     <a href="index.html" class="nav-logo">DM</a>
     <ul class="nav-links">
@@ -150,290 +47,190 @@
   </nav>
 
   <div class="terminal-page">
-    <div class="terminal-header">
-      <div class="terminal-header-inner">
+    <div class="t-header">
+      <div class="t-header-inner">
         <h1 class="t-page-title">Interactive <span>Terminal</span></h1>
-        <p class="t-hint">Type <span>help</span> to see all commands</p>
+        <p class="t-hint">Type <span>help</span> to get started</p>
       </div>
     </div>
-
-    <div class="terminal-wrap">
-      <div class="terminal-window">
-        <div class="terminal-titlebar">
-          <div class="dot dot-r"></div>
-          <div class="dot dot-y"></div>
-          <div class="dot dot-g"></div>
-          <span class="t-bar-title">daniel@portfolio ~ bash — 80×24</span>
+    <div class="t-wrap">
+      <div class="t-window">
+        <div class="t-titlebar">
+          <div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div>
+          <span class="t-bar-title">daniel@portfolio ~ bash</span>
           <span class="t-bar-status">● connected</span>
         </div>
-        <div id="terminal-output"></div>
-        <div class="terminal-input-row">
-          <span class="t-input-prompt">daniel@portfolio:~$&nbsp;</span>
-          <input id="cmd-input" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus />
+        <div id="t-out"></div>
+        <div class="t-input-row">
+          <span class="t-in-prompt">daniel@portfolio:~$&nbsp;</span>
+          <input id="cmd" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus />
         </div>
       </div>
     </div>
-
     <div class="quickcmds">
-      <button class="qcmd" onclick="runCmd('whoami')">whoami</button>
-      <button class="qcmd" onclick="runCmd('skills')">skills</button>
-      <button class="qcmd" onclick="runCmd('projects')">projects</button>
-      <button class="qcmd" onclick="runCmd('labs')">labs</button>
-      <button class="qcmd" onclick="runCmd('certs')">certs</button>
-      <button class="qcmd" onclick="runCmd('contact')">contact</button>
-      <button class="qcmd" onclick="runCmd('status')">status</button>
-      <button class="qcmd" onclick="runCmd('clear')">clear</button>
+      <button class="qcmd" onclick="run('about')">about</button>
+      <button class="qcmd" onclick="run('skills')">skills</button>
+      <button class="qcmd" onclick="run('projects')">projects</button>
+      <button class="qcmd" onclick="run('labs')">labs</button>
+      <button class="qcmd" onclick="run('certs')">certs</button>
+      <button class="qcmd" onclick="run('contact')">contact</button>
+      <button class="qcmd" onclick="run('status')">status</button>
+      <button class="qcmd" onclick="run('clear')">clear</button>
     </div>
   </div>
 
   <script>
-    const out = document.getElementById('terminal-output');
-    const input = document.getElementById('cmd-input');
-    const history = [];
-    let histIdx = -1;
+    const out=document.getElementById('t-out');
+    const inp=document.getElementById('cmd');
+    const hist=[];let hi=-1;
 
-    // Boot sequence
-    const boot = [
-      { cls: 't-dim',     text: '──────────────────────────────────────────────────────────' },
-      { cls: 't-gold',    text: '   DANIEL MICHAEL // CYBERSECURITY PORTFOLIO TERMINAL' },
-      { cls: 't-dim',     text: '──────────────────────────────────────────────────────────' },
-      { cls: 't-info',    text: '   Version 2.0.0  |  March 2026  |  Atlanta, GA' },
-      { cls: 't-dim',     text: '' },
-      { cls: 't-success', text: '   [OK] Portfolio OS loaded successfully' },
-      { cls: 't-success', text: '   [OK] Projects module: 3 active' },
-      { cls: 't-success', text: '   [OK] Labs module: 8 labs tracked' },
-      { cls: 't-success', text: '   [OK] SIEM dashboard: online' },
-      { cls: 't-dim',     text: '' },
-      { cls: 't-info',    text: "   Type 'help' to see available commands." },
-      { cls: 't-dim',     text: '──────────────────────────────────────────────────────────' },
-      { cls: '',          text: '' },
+    const boot=[
+      {c:'td',t:'──────────────────────────────────────────────────'},
+      {c:'tg',t:'   DANIEL MICHAEL // PORTFOLIO TERMINAL v2.0'},
+      {c:'td',t:'──────────────────────────────────────────────────'},
+      {c:'ti',t:'   Cristo Rey Atlanta Jesuit · Class of 2028'},
+      {c:'td',t:''},
+      {c:'ts',t:'   [OK] Session started'},
+      {c:'ts',t:'   [OK] Projects: 3 active'},
+      {c:'ts',t:'   [OK] Labs: 8 tracked'},
+      {c:'td',t:''},
+      {c:'ti',t:"   Type 'help' to see available commands."},
+      {c:'td',t:'──────────────────────────────────────────────────'},
+      {c:'',  t:''},
     ];
 
-    const COMMANDS = {
-      help: () => [
-        { cls: 't-header', text: 'Available Commands:' },
-        { cls: 't-dim',    text: '' },
-        { cls: 't-gold',   text: '  whoami      →  About Daniel Michael' },
-        { cls: 't-gold',   text: '  skills      →  Technical skills & tools' },
-        { cls: 't-gold',   text: '  projects    →  View all projects' },
-        { cls: 't-gold',   text: '  labs        →  Cyber labs & training' },
-        { cls: 't-gold',   text: '  certs       →  Certification pipeline' },
-        { cls: 't-gold',   text: '  contact     →  Contact information' },
-        { cls: 't-gold',   text: '  status      →  Current system status' },
-        { cls: 't-gold',   text: '  goal        →  Long-term goals' },
-        { cls: 't-gold',   text: '  clear        →  Clear terminal' },
-        { cls: 't-gold',   text: '  ls           →  List portfolio sections' },
-        { cls: 't-gold',   text: '  uname        →  System information' },
-        { cls: 't-dim',    text: '' },
+    const CMDS={
+      help:()=>[
+        {c:'tg',t:'Commands:'},
+        {c:'td',t:''},
+        {c:'tg',t:'  about      →  About me'},
+        {c:'tg',t:'  skills     →  Technical skills'},
+        {c:'tg',t:'  projects   →  My projects'},
+        {c:'tg',t:'  labs       →  Cyber labs & training'},
+        {c:'tg',t:'  certs      →  Certification pipeline'},
+        {c:'tg',t:'  contact    →  Contact info'},
+        {c:'tg',t:'  status     →  Project status'},
+        {c:'tg',t:'  ls         →  List site sections'},
+        {c:'tg',t:'  clear      →  Clear terminal'},
+        {c:'td',t:''},
       ],
-
-      whoami: () => [
-        { cls: 't-header', text: '┌─ daniel_michael ─────────────────────────────────────┐' },
-        { cls: 't-info',   text: '│' },
-        { cls: 't-white',  text: '│  Name     :  Daniel Michael' },
-        { cls: 't-white',  text: '│  Role     :  Cybersecurity & CS Student' },
-        { cls: 't-white',  text: '│  School   :  Cristo Rey Atlanta Jesuit HS' },
-        { cls: 't-white',  text: '│  Class    :  2028 (10th Grade)' },
-        { cls: 't-white',  text: '│  Location :  Atlanta, Georgia, USA' },
-        { cls: 't-white',  text: '│  Work     :  Georgia Tech · Dean of Engineering Office' },
-        { cls: 't-white',  text: '│  Robotics :  FTC Programmer · Top 16 Atlanta-Marist' },
-        { cls: 't-info',   text: '│' },
-        { cls: 't-header', text: '└──────────────────────────────────────────────────────┘' },
-        { cls: 't-dim',    text: '' },
+      about:()=>[
+        {c:'tg',t:'About:'},
+        {c:'td',t:''},
+        {c:'',t:'  Name     :  Daniel Michael'},
+        {c:'',t:'  School   :  Cristo Rey Atlanta Jesuit High School'},
+        {c:'',t:'  Year     :  Sophomore · Class of 2028'},
+        {c:'',t:'  Location :  Atlanta, Georgia'},
+        {c:'',t:'  Work     :  Georgia Tech · Dean of Engineering Office'},
+        {c:'',t:'  Robotics :  FTC Programmer · 13th Place, Marist League'},
+        {c:'',t:'  Plans    :  Pursuing CS & Cybersecurity in college'},
+        {c:'td',t:''},
       ],
-
-      skills: () => [
-        { cls: 't-header', text: 'Technical Skills:' },
-        { cls: 't-dim',    text: '' },
-        { cls: 't-gold',   text: '  Languages   │  Python · Java · Bash · C (learning)' },
-        { cls: 't-gold',   text: '  OS          │  Linux (Ubuntu/Kali) · Windows' },
-        { cls: 't-gold',   text: '  Networking  │  TCP/IP · DNS · HTTP · Wireshark' },
-        { cls: 't-gold',   text: '  Security    │  CTFs · Port Scanning · SIEM · Log Analysis' },
-        { cls: 't-gold',   text: '  Hardware    │  Arduino · Embedded · Physical Security' },
-        { cls: 't-gold',   text: '  Tools       │  Git · GitHub Pages · VS Code · TryHackMe' },
-        { cls: 't-gold',   text: '  Robotics    │  FTC SDK · Autonomous Control · Java' },
-        { cls: 't-dim',    text: '' },
+      skills:()=>[
+        {c:'tg',t:'Skills:'},
+        {c:'td',t:''},
+        {c:'',t:'  Languages   │  Python · Java · Bash'},
+        {c:'',t:'  OS          │  Linux · Windows'},
+        {c:'',t:'  Networking  │  TCP/IP · DNS · HTTP · Wireshark'},
+        {c:'',t:'  Security    │  CTFs · Port Scanning · SIEM · Log Analysis'},
+        {c:'',t:'  Hardware    │  Arduino · Embedded · Physical Security'},
+        {c:'',t:'  Tools       │  Git · GitHub Pages · VS Code'},
+        {c:'td',t:''},
       ],
-
-      projects: () => [
-        { cls: 't-header', text: 'Projects:' },
-        { cls: 't-dim',    text: '' },
-        { cls: 't-success',text: '  [LIVE]      password-strength-analyzer' },
-        { cls: 't-info',   text: '               Python tool · entropy calc · SIEM logging' },
-        { cls: 't-info',   text: '               github.com/danielmichael20208/password-strength-analyzer' },
-        { cls: 't-dim',    text: '' },
-        { cls: 't-gold',   text: '  [ACTIVE]    python-port-scanner' },
-        { cls: 't-info',   text: '               TCP probing · service ID · Blue Team integration' },
-        { cls: 't-info',   text: '               github.com/danielmichael20208/port-scanner' },
-        { cls: 't-dim',    text: '' },
-        { cls: 't-gold',   text: '  [PROTO]     arduino-cyberdoor-v1' },
-        { cls: 't-info',   text: '               Physical access control · PIN auth · servo lock' },
-        { cls: 't-dim',    text: '' },
+      projects:()=>[
+        {c:'tg',t:'Projects:'},
+        {c:'td',t:''},
+        {c:'ts',t:'  [LIVE]    password-strength-analyzer'},
+        {c:'ti',t:'             Python · entropy calc · SIEM logging'},
+        {c:'td',t:''},
+        {c:'tg',t:'  [WIP]     python-port-scanner'},
+        {c:'ti',t:'             TCP probing · service ID · SIEM integration'},
+        {c:'td',t:''},
+        {c:'',t:'  [PROTO]   arduino-cyberdoor-v1'},
+        {c:'ti',t:'             Physical access control · PIN auth · servo lock'},
+        {c:'td',t:''},
       ],
-
-      labs: () => [
-        { cls: 't-header', text: 'Cyber Labs & Training:' },
-        { cls: 't-dim',    text: '' },
-        { cls: 't-success',text: '  [COMPLETE]   Wireshark Traffic Analysis' },
-        { cls: 't-gold',   text: '  [ACTIVE]     TryHackMe – Pre-Security & Intro to Cyber' },
-        { cls: 't-gold',   text: '  [ACTIVE]     PicoCTF (Carnegie Mellon)' },
-        { cls: 't-gold',   text: '  [ACTIVE]     OverTheWire – Bandit (Linux wargame)' },
-        { cls: 't-gold',   text: '  [ACTIVE]     Python Security Automation' },
-        { cls: 't-gold',   text: '  [ACTIVE]     CyberDoor Hardware Lab' },
-        { cls: 't-gold',   text: '  [IN PROG]    HackTheBox Academy' },
-        { cls: 't-info',   text: '  [LIVE]       Security SIEM Dashboard' },
-        { cls: 't-dim',    text: '' },
+      labs:()=>[
+        {c:'tg',t:'Labs:'},
+        {c:'td',t:''},
+        {c:'ts',t:'  [DONE]    Wireshark Traffic Analysis'},
+        {c:'tg',t:'  [ACTIVE]  TryHackMe – Pre-Security & Intro to Cyber'},
+        {c:'tg',t:'  [ACTIVE]  PicoCTF'},
+        {c:'tg',t:'  [ACTIVE]  OverTheWire – Bandit'},
+        {c:'tg',t:'  [ACTIVE]  Python Security Automation'},
+        {c:'tg',t:'  [ACTIVE]  CyberDoor Hardware Lab'},
+        {c:'tg',t:'  [WIP]     HackTheBox Academy'},
+        {c:'ts',t:'  [LIVE]    Security SIEM Dashboard'},
+        {c:'td',t:''},
       ],
-
-      certs: () => [
-        { cls: 't-header', text: 'Certification Pipeline:' },
-        { cls: 't-dim',    text: '' },
-        { cls: 't-gold',   text: '  Stage 1 — Foundation  [IN PROGRESS]' },
-        { cls: 't-info',   text: '    → CompTIA Network+' },
-        { cls: 't-info',   text: '    → Linux Essentials (LPIC/NDG)' },
-        { cls: 't-info',   text: '    → Google Cybersecurity Certificate' },
-        { cls: 't-dim',    text: '' },
-        { cls: 't-muted',  text: '  Stage 2 — Security Core  [PLANNED]' },
-        { cls: 't-info',   text: '    → CompTIA Security+' },
-        { cls: 't-info',   text: '    → eJPT (INE Security)' },
-        { cls: 't-info',   text: '    → Azure AZ-900' },
-        { cls: 't-info',   text: '    → Splunk Core User / Analyst' },
-        { cls: 't-dim',    text: '' },
-        { cls: 't-muted',  text: '  Stage 3 — Specialization  [FUTURE]' },
-        { cls: 't-info',   text: '    → OSCP (Offensive Security)' },
-        { cls: 't-info',   text: '    → eWPT/eWPTX (Web App Pentesting)' },
-        { cls: 't-info',   text: '    → GSEC / GCIA (SANS) — Stretch Goal' },
-        { cls: 't-dim',    text: '' },
+      certs:()=>[
+        {c:'tg',t:'Certification Pipeline:'},
+        {c:'td',t:''},
+        {c:'tg',t:'  Stage 1 — Foundation  [In Progress]'},
+        {c:'ti',t:'    CompTIA Network+'},
+        {c:'ti',t:'    Linux Essentials'},
+        {c:'ti',t:'    Google Cybersecurity Certificate'},
+        {c:'td',t:''},
+        {c:'ti',t:'  Stage 2 — Security Core  [Planned]'},
+        {c:'ti',t:'    CompTIA Security+ · eJPT · AZ-900 · Splunk'},
+        {c:'td',t:''},
+        {c:'ti',t:'  Stage 3 — Specialization  [Future]'},
+        {c:'ti',t:'    OSCP · eWPT · GSEC (SANS)'},
+        {c:'td',t:''},
       ],
-
-      contact: () => [
-        { cls: 't-header', text: 'Contact:' },
-        { cls: 't-dim',    text: '' },
-        { cls: 't-gold',   text: '  Email   :  Daniel.Michael20208@gmail.com' },
-        { cls: 't-gold',   text: '  GitHub  :  github.com/danielmichael20208' },
-        { cls: 't-gold',   text: '  Port    :  contact.html' },
-        { cls: 't-info',   text: '' },
-        { cls: 't-info',   text: '  Response time: 24–48 hours' },
-        { cls: 't-dim',    text: '' },
+      contact:()=>[
+        {c:'tg',t:'Contact:'},
+        {c:'td',t:''},
+        {c:'',t:'  Email   :  Daniel.Michael20208@gmail.com'},
+        {c:'',t:'  GitHub  :  github.com/danielmichael20208'},
+        {c:'ti',t:'  Response: 24–48 hours'},
+        {c:'td',t:''},
       ],
-
-      status: () => {
-        const now = new Date();
-        return [
-          { cls: 't-header', text: 'System Status:' },
-          { cls: 't-dim',    text: '' },
-          { cls: 't-success',text: '  [OK]  Portfolio    online' },
-          { cls: 't-success',text: '  [OK]  SIEM         operational' },
-          { cls: 't-success',text: '  [OK]  Projects     3 active' },
-          { cls: 't-success',text: '  [OK]  Labs         8 tracked' },
-          { cls: 't-gold',   text: '  [--]  OSCP         not yet (give it time)' },
-          { cls: 't-dim',    text: '' },
-          { cls: 't-info',   text: `  Uptime  :  Class of 2028` },
-          { cls: 't-info',   text: `  Clock   :  ${now.toLocaleString()}` },
-          { cls: 't-dim',    text: '' },
-        ];
-      },
-
-      goal: () => [
-        { cls: 't-header', text: 'Long-Term Goals:' },
-        { cls: 't-dim',    text: '' },
-        { cls: 't-gold',   text: '  → Georgia Tech — Information Security / Cybersecurity Track' },
-        { cls: 't-gold',   text: '  → Obtain OSCP certification' },
-        { cls: 't-gold',   text: '  → Work in offensive security / red teaming' },
-        { cls: 't-gold',   text: '  → Contribute to systems that protect people & infrastructure' },
-        { cls: 't-dim',    text: '' },
-        { cls: 't-info',   text: '  "The best way to understand security is to think like' },
-        { cls: 't-info',   text: '   both attacker and defender at the same time."' },
-        { cls: 't-dim',    text: '' },
+      status:()=>[
+        {c:'tg',t:'Project Status:'},
+        {c:'td',t:''},
+        {c:'ts',t:'  [LIVE]    password-strength-analyzer'},
+        {c:'tg',t:'  [WIP]     python-port-scanner'},
+        {c:'',t:'  [PROTO]   arduino-cyberdoor-v1'},
+        {c:'td',t:''},
       ],
-
-      ls: () => [
-        { cls: 't-header', text: 'Portfolio Sections:' },
-        { cls: 't-dim',    text: '' },
-        { cls: 't-gold',   text: '  drwxr-xr-x  index.html       Home / Landing' },
-        { cls: 't-gold',   text: '  drwxr-xr-x  projects.html    Projects showcase' },
-        { cls: 't-gold',   text: '  drwxr-xr-x  resume.html      Experience & background' },
-        { cls: 't-gold',   text: '  drwxr-xr-x  labs.html        Cyber labs & training' },
-        { cls: 't-gold',   text: '  drwxr-xr-x  terminal.html    This terminal' },
-        { cls: 't-gold',   text: '  drwxr-xr-x  contact.html     Get in touch' },
-        { cls: 't-dim',    text: '' },
+      ls:()=>[
+        {c:'tg',t:'Site Sections:'},
+        {c:'td',t:''},
+        {c:'',t:'  index.html      Home'},
+        {c:'',t:'  projects.html   Projects'},
+        {c:'',t:'  resume.html     Resume'},
+        {c:'',t:'  labs.html       Cyber Labs'},
+        {c:'',t:'  terminal.html   This terminal'},
+        {c:'',t:'  contact.html    Contact'},
+        {c:'td',t:''},
       ],
-
-      uname: () => [
-        { cls: 't-gold',   text: 'Portfolio OS v2.0.0 — daniel@portfolio #1 SMP' },
-        { cls: 't-info',   text: 'Build: March 2026 | Architecture: x86_64' },
-        { cls: 't-dim',    text: '' },
-      ],
-
-      clear: () => { out.innerHTML = ''; return []; },
+      clear:()=>{ out.innerHTML=''; return []; },
     };
 
-    function printLine(line) {
-      const span = document.createElement('span');
-      span.className = 't-line ' + (line.cls || '');
-      span.textContent = line.text;
-      out.appendChild(span);
-    }
+    function print(line){const s=document.createElement('span');s.className='tl '+(line.c||'');s.textContent=line.t;out.appendChild(s);}
+    function printAll(lines){if(lines&&lines.length)lines.forEach(l=>print(l));out.scrollTop=out.scrollHeight;}
+    function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
-    function printLines(lines) {
-      lines.forEach(l => printLine(l));
-      out.scrollTop = out.scrollHeight;
-    }
-
-    function runCmd(cmd) {
-      cmd = cmd.trim().toLowerCase();
-      if (!cmd) return;
-
-      // Echo the command
-      const echo = document.createElement('span');
-      echo.className = 't-line';
-      echo.innerHTML = `<span class="t-prompt">daniel@portfolio:~$ </span><span class="t-input-echo">${escHtml(cmd)}</span>`;
+    function run(cmd){
+      cmd=cmd.trim().toLowerCase();if(!cmd)return;
+      const echo=document.createElement('span');echo.className='tl';
+      echo.innerHTML=`<span class="tp">daniel@portfolio:~$ </span>${esc(cmd)}`;
       out.appendChild(echo);
-
-      if (cmd in COMMANDS) {
-        const result = COMMANDS[cmd]();
-        if (result && result.length) printLines(result);
-      } else {
-        printLines([
-          { cls: 't-error', text: `bash: ${cmd}: command not found` },
-          { cls: 't-info',  text: `Type 'help' to see available commands.` },
-          { cls: 't-dim',   text: '' },
-        ]);
-      }
-      out.scrollTop = out.scrollHeight;
+      if(cmd in CMDS){const r=CMDS[cmd]();if(r&&r.length)printAll(r);}
+      else{printAll([{c:'te',t:`bash: ${cmd}: command not found`},{c:'ti',t:"Type 'help' for commands."},{c:'td',t:''}]);}
+      out.scrollTop=out.scrollHeight;
     }
 
-    function escHtml(s) {
-      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    }
-
-    // Boot
-    let i = 0;
-    function bootNext() {
-      if (i < boot.length) { printLine(boot[i++]); out.scrollTop = out.scrollHeight; setTimeout(bootNext, 55); }
-    }
+    let i=0;function bootNext(){if(i<boot.length){print(boot[i++]);out.scrollTop=out.scrollHeight;setTimeout(bootNext,50);}}
     bootNext();
 
-    // Input handling
-    input.addEventListener('keydown', e => {
-      if (e.key === 'Enter') {
-        const val = input.value;
-        history.unshift(val);
-        histIdx = -1;
-        input.value = '';
-        runCmd(val);
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        if (histIdx < history.length - 1) { histIdx++; input.value = history[histIdx]; }
-      } else if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        if (histIdx > 0) { histIdx--; input.value = history[histIdx]; }
-        else { histIdx = -1; input.value = ''; }
-      }
+    inp.addEventListener('keydown',e=>{
+      if(e.key==='Enter'){const v=inp.value;hist.unshift(v);hi=-1;inp.value='';run(v);}
+      else if(e.key==='ArrowUp'){e.preventDefault();if(hi<hist.length-1){hi++;inp.value=hist[hi];}}
+      else if(e.key==='ArrowDown'){e.preventDefault();if(hi>0){hi--;inp.value=hist[hi];}else{hi=-1;inp.value='';}}
     });
-
-    // Click anywhere to focus input
-    document.querySelector('.terminal-window').addEventListener('click', () => input.focus());
+    document.querySelector('.t-window').addEventListener('click',()=>inp.focus());
   </script>
 </body>
 </html>
