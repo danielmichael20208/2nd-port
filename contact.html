@@ -1,131 +1,279 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact | Daniel Michael</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 3.5rem;
+      align-items: start;
+    }
+
+    /* Form */
+    .contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    .field-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    .field-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem; letter-spacing: 0.2em;
+      color: var(--gold-dim); text-transform: uppercase;
+    }
+    .field-input, .field-textarea {
+      background: var(--obsidian-2);
+      border: 1px solid rgba(201,168,76,0.15);
+      color: var(--white);
+      font-family: var(--font-body); font-size: 0.9rem;
+      font-weight: 300; padding: 0.85rem 1rem;
+      outline: none;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      width: 100%;
+    }
+    .field-input::placeholder, .field-textarea::placeholder {
+      color: #4a4840;
+    }
+    .field-input:focus, .field-textarea:focus {
+      border-color: rgba(201,168,76,0.5);
+      box-shadow: 0 0 0 1px rgba(201,168,76,0.15);
+    }
+    .field-textarea { resize: vertical; min-height: 160px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+
+    .btn-submit {
+      font-family: var(--font-mono);
+      font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--obsidian); background: var(--gold);
+      border: none; padding: 1rem 2.5rem;
+      cursor: pointer; position: relative; overflow: hidden;
+      transition: background 0.25s;
+      align-self: flex-start;
+    }
+    .btn-submit::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--gold-light);
+      transform: translateX(-100%);
+      transition: transform 0.3s;
+    }
+    .btn-submit:hover::before { transform: translateX(0); }
+    .btn-submit span { position: relative; z-index: 1; }
+
+    #form-status {
+      font-family: var(--font-mono);
+      font-size: 0.75rem; letter-spacing: 0.1em;
+      padding: 0.75rem 1rem;
+      display: none;
+    }
+    #form-status.success { color: var(--green); border: 1px solid rgba(61,220,132,0.2); background: rgba(61,220,132,0.04); }
+    #form-status.error   { color: #dc6060;      border: 1px solid rgba(220,96,96,0.2);  background: rgba(220,96,96,0.04); }
+
+    /* Info sidebar */
+    .contact-info { display: flex; flex-direction: column; gap: 1rem; }
+    .info-card {
+      border: 1px solid rgba(201,168,76,0.12);
+      background: var(--obsidian-2);
+      padding: 1.5rem;
+      position: relative; overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .info-card::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 3px; height: 0; background: var(--gold);
+      transition: height 0.3s;
+    }
+    .info-card:hover { border-color: rgba(201,168,76,0.35); }
+    .info-card:hover::before { height: 100%; }
+
+    .info-icon {
+      font-size: 1.2rem; margin-bottom: 0.5rem; display: block;
+    }
+    .info-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; letter-spacing: 0.2em;
+      color: var(--gold-dim); text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+    .info-value {
+      font-family: var(--font-mono);
+      font-size: 0.8rem; color: var(--white);
+    }
+    .info-value a {
+      color: var(--gold); text-decoration: none; transition: color 0.2s;
+    }
+    .info-value a:hover { color: var(--gold-light); }
+    .info-sub {
+      font-family: var(--font-mono);
+      font-size: 0.65rem; color: var(--muted);
+      margin-top: 0.25rem; letter-spacing: 0.05em;
+    }
+
+    /* Availability card */
+    .avail-card {
+      border: 1px solid rgba(61,220,132,0.15);
+      background: rgba(61,220,132,0.03);
+      padding: 1.25rem 1.5rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .avail-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      flex-shrink: 0;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%,100% { opacity: 1; }
+      50%      { opacity: 0.4; }
+    }
+    .avail-text {
+      font-family: var(--font-mono);
+      font-size: 0.72rem; color: var(--green); letter-spacing: 0.08em;
+    }
+
+    @media (max-width: 900px) {
+      .contact-layout { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
-<nav class="main-navbar">
-  <div class="nav-container">
-    <a href="index.html" class="nav-logo">Daniel Michael</a>
-    <button class="nav-toggle" id="nav-toggle"><span></span><span></span><span></span></button>
-    <div class="nav-links" id="nav-links">
-      <a href="projects.html"  class="nav-btn">Projects</a>
-      <a href="labs.html"      class="nav-btn">Cyber Labs</a>
-      <a href="courses.html"   class="nav-btn">Courses</a>
-      <a href="terminal.html"  class="nav-btn">Terminal</a>
-      <a href="siem.html"      class="nav-btn">SIEM</a>
-      <a href="resume.html"    class="nav-btn">Resume</a>
-      <a href="contact.html"   class="nav-btn">Contact</a>
+  <nav>
+    <a href="index.html" class="nav-logo">DM</a>
+    <ul class="nav-links">
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="resume.html">Resume</a></li>
+      <li><a href="labs.html">Cyber Labs</a></li>
+      <li><a href="terminal.html">Terminal</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-hero">
+    <div class="page-hero-grid"></div>
+    <div class="page-hero-content">
+      <p class="page-tag">06 // Contact</p>
+      <h1 class="page-title">Get In <span>Touch</span></h1>
+      <p class="page-desc">Interested in cybersecurity, robotics, or engineering? Whether it's advice, collaboration, or just talking tech — I'd love to hear from you.</p>
     </div>
   </div>
-</nav>
 
-<div class="page-hero">
-  <div class="container">
-    <div class="page-hero-bar"></div>
-    <h1 class="page-hero-title">Get in Touch</h1>
-    <p class="page-hero-sub">
-      Interested in cybersecurity, robotics, or engineering? I'm always glad to connect.
-    </p>
+  <div class="page-content">
+    <div class="contact-layout reveal">
+
+      <!-- Form -->
+      <div>
+        <div class="section-label">Send a Message</div>
+        <form class="contact-form" id="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
+          <div class="form-row">
+            <div class="field-group">
+              <label class="field-label" for="name">Name</label>
+              <input class="field-input" type="text" id="name" name="name" placeholder="Your name" required />
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="email">Email</label>
+              <input class="field-input" type="email" id="email" name="email" placeholder="your@email.com" required />
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="subject">Subject</label>
+            <input class="field-input" type="text" id="subject" name="subject" placeholder="What's this about?" />
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="message">Message</label>
+            <textarea class="field-textarea" id="message" name="message" placeholder="Your message here..." required></textarea>
+          </div>
+          <div id="form-status"></div>
+          <button type="submit" class="btn-submit"><span>Send Message →</span></button>
+        </form>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="contact-info">
+
+        <div class="avail-card">
+          <div class="avail-dot"></div>
+          <span class="avail-text">Available — responds in 24–48 hrs</span>
+        </div>
+
+        <div class="info-card">
+          <span class="info-icon">✉</span>
+          <p class="info-label">Email</p>
+          <p class="info-value">
+            <a href="mailto:Daniel.Michael20208@gmail.com">Daniel.Michael20208@gmail.com</a>
+          </p>
+          <p class="info-sub">Best for formal inquiries</p>
+        </div>
+
+        <div class="info-card">
+          <span class="info-icon">⌥</span>
+          <p class="info-label">GitHub</p>
+          <p class="info-value">
+            <a href="https://github.com/danielmichael20208" target="_blank">github.com/danielmichael20208</a>
+          </p>
+          <p class="info-sub">Projects, source code, portfolio</p>
+        </div>
+
+        <div class="info-card">
+          <span class="info-icon">◈</span>
+          <p class="info-label">Interested In</p>
+          <p class="info-value" style="line-height:1.8; color: var(--muted); font-size:0.78rem;">
+            Cybersecurity advice &amp; mentorship<br>
+            Internship opportunities<br>
+            Collaboration on security projects<br>
+            Just talking tech
+          </p>
+        </div>
+
+      </div>
+    </div>
   </div>
-</div>
 
-<section>
-  <div class="container">
-    <div class="row justify-content-center g-5">
+  <footer>
+    <span class="footer-name">Daniel Michael</span>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="labs.html">Labs</a>
+      <a href="https://github.com/danielmichael20208" target="_blank">GitHub</a>
+    </div>
+    <span class="footer-copy">© 2026 — All rights reserved</span>
+  </footer>
 
-      <!-- Contact form -->
-      <div class="col-lg-6" data-aos="fade-right">
-        <div class="project-card">
-          <h3 style="margin-bottom:20px;">Send a Message</h3>
-          <form action="https://formspree.io/f/xkogdqqq" method="POST">
-            <div class="mb-3">
-              <label class="form-label">Name</label>
-              <input type="text" class="form-control" name="name" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Email</label>
-              <input type="email" class="form-control" name="_replyto" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Message</label>
-              <textarea class="form-control" name="message" rows="5" required></textarea>
-            </div>
-            <button type="submit" class="btn-primary w-100">Send Message</button>
-          </form>
-        </div>
-      </div>
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.05 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-      <!-- Contact info -->
-      <div class="col-lg-4" data-aos="fade-left">
-        <h3 style="font-family:var(--font-head);color:var(--gold);letter-spacing:1px;margin-bottom:20px;">Direct Links</h3>
-
-        <div class="course-item" style="flex-direction:column;gap:6px;">
-          <div style="display:flex;align-items:center;gap:12px;">
-            <div class="course-icon">✉️</div>
-            <div>
-              <div class="course-info" style=""><h5>Email</h5></div>
-              <a href="/cdn-cgi/l/email-protection#feba9f90979b92d0b3979d969f9b92cccecccec6be99939f9792d09d9193" style="font-family:var(--font-mono);font-size:0.8rem;color:var(--gold);"><span class="__cf_email__" data-cfemail="7d391c131418115330141e151c18114f4d4f4d453d1a101c1411531e1210">[email&#160;protected]</span></a>
-            </div>
-          </div>
-        </div>
-
-        <div class="course-item" style="flex-direction:column;gap:6px;">
-          <div style="display:flex;align-items:center;gap:12px;">
-            <div class="course-icon">💻</div>
-            <div>
-              <div class="course-info"><h5>GitHub</h5></div>
-              <a href="https://github.com/danielmichael20208" target="_blank" style="font-family:var(--font-mono);font-size:0.8rem;color:var(--gold);">github.com/danielmichael20208</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="course-item">
-          <div style="display:flex;align-items:center;gap:12px;">
-            <div class="course-icon">🏫</div>
-            <div>
-              <p style="color:var(--gold);font-family:var(--font-head);font-weight:700;margin-bottom:2px;">Cristo Rey Atlanta Jesuit</p>
-              <p style="color:var(--text-muted);font-size:0.82rem;">10th Grade · Class of 2028</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="course-item">
-          <div style="display:flex;align-items:center;gap:12px;">
-            <div class="course-icon">🏛️</div>
-            <div>
-              <p style="color:var(--gold);font-family:var(--font-head);font-weight:700;margin-bottom:2px;">Georgia Tech Work Study</p>
-              <p style="color:var(--text-muted);font-size:0.82rem;">Dean of Engineering's Office · 2024–Present</p>
-            </div>
-          </div>
-        </div>
-
-        <p style="color:var(--text-muted);font-size:0.82rem;margin-top:20px;line-height:1.6;">
-          I typically reply within 24–48 hours. Feel free to reach out about
-          cybersecurity, engineering, robotics, or anything tech-related.
-        </p>
-      </div>
-
-    </div><!-- /row -->
-  </div><!-- /container -->
-</section>
-
-<footer>
-  <p>© 2026 <span>Daniel Michael</span></p>
-</footer>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-<script>
-AOS.init({ duration: 900, once: true, easing: 'ease-out-cubic', offset: 60 });
-document.getElementById('nav-toggle').addEventListener('click', () => {
-  document.getElementById('nav-l
+    // Form submission handler
+    const form = document.getElementById('contact-form');
+    const status = document.getElementById('form-status');
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const data = new FormData(form);
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST', body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          status.textContent = '[OK] Message sent! I\'ll get back to you within 48 hours.';
+          status.className = 'success'; status.style.display = 'block';
+          form.reset();
+        } else {
+          throw new Error();
+        }
+      } catch {
+        status.textContent = '[ERR] Couldn\'t send. Please email directly: Daniel.Michael20208@gmail.com';
+        status.className = 'error'; status.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>

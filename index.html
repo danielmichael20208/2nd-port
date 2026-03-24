@@ -1,319 +1,740 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Daniel Michael | Cybersecurity Portfolio</title>
-  <meta name="description" content="High school cybersecurity student at Georgia Tech Work Study. FTC Robotics Programmer. Building real tools: port scanner, password analyzer, Arduino access control.">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    :root {
+      --obsidian:    #0a0a0c;
+      --obsidian-2:  #111116;
+      --obsidian-3:  #1a1a22;
+      --gold:        #c9a84c;
+      --gold-light:  #e8c96a;
+      --gold-dim:    #7a6030;
+      --white:       #f0ede6;
+      --muted:       #7a7870;
+      --green:       #3ddc84;
+      --font-mono:   'Share Tech Mono', monospace;
+      --font-display:'Cinzel', serif;
+      --font-body:   'Raleway', sans-serif;
+    }
 
-  <!-- AOS -->
-  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    html { scroll-behavior: smooth; }
 
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    body {
+      background: var(--obsidian);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: default;
+    }
 
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="css/style.css">
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ── SCANLINES ── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.04) 2px,
+        rgba(0,0,0,0.04) 4px
+      );
+      pointer-events: none;
+      z-index: 9998;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(10,10,12,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -4px; left: 0; right: 0;
+      height: 1px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 6rem 4rem 4rem;
+    }
+
+    /* Grid lines background */
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+    }
+
+    /* Glowing orb */
+    .hero-orb {
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+      border-radius: 50%;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      animation: pulse 6s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 0.6; transform: translate(-50%,-50%) scale(1); }
+      50%      { opacity: 1;   transform: translate(-50%,-50%) scale(1.08); }
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center;
+      max-width: 900px;
+    }
+
+    .hero-tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.2s forwards;
+    }
+    .hero-tag::before { content: '> '; color: var(--gold-dim); }
+
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.4s forwards;
+    }
+    .hero-name span { color: var(--gold); }
+
+    .hero-subtitle {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: var(--muted);
+      min-height: 1.5em;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.6s forwards;
+    }
+    .cursor {
+      display: inline-block;
+      width: 2px; height: 1em;
+      background: var(--gold);
+      vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    .hero-badges {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.8s forwards;
+    }
+    .badge {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      padding: 0.4rem 1rem;
+      border: 1px solid rgba(201,168,76,0.3);
+      color: var(--gold-dim);
+      text-transform: uppercase;
+    }
+
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--obsidian);
+      background: var(--gold);
+      padding: 0.85rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
+      opacity: 0;
+      animation: fadeUp 0.6s 1s forwards;
+    }
+    .hero-cta::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--gold-light);
+      transform: translateX(-100%);
+      transition: transform 0.3s;
+    }
+    .hero-cta:hover::before { transform: translateX(0); }
+    .hero-cta span { position: relative; z-index: 1; }
+
+    /* Scroll indicator */
+    .scroll-hint {
+      position: absolute; bottom: 2rem; left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      animation: fadeUp 0.6s 1.4s forwards; opacity: 0;
+    }
+    .scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, var(--gold-dim), transparent);
+      animation: scrollDrop 2s ease-in-out infinite;
+    }
+    @keyframes scrollDrop {
+      0%,100% { transform: scaleY(1); opacity: 1; }
+      50%      { transform: scaleY(0.5); opacity: 0.4; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTION SHARED ── */
+    section {
+      padding: 7rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, rgba(201,168,76,0.4), transparent);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      margin-bottom: 3rem;
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .about-text p {
+      font-size: 0.95rem;
+      line-height: 1.85;
+      color: #b0ada6;
+      margin-bottom: 1.2rem;
+    }
+    .about-text p strong { color: var(--gold); font-weight: 500; }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .stat-card {
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 1.5rem;
+      background: var(--obsidian-2);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 3px; height: 0;
+      background: var(--gold);
+      transition: height 0.3s;
+    }
+    .stat-card:hover { border-color: rgba(201,168,76,0.4); }
+    .stat-card:hover::before { height: 100%; }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--gold);
+      font-weight: 700;
+      display: block;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* ── SKILL PIPELINE ── */
+    .skills-section { background: var(--obsidian-2); padding: 7rem 0; }
+    .skills-inner { max-width: 1100px; margin: 0 auto; padding: 0 4rem; }
+
+    .pipeline {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .pipeline-card {
+      border: 1px solid rgba(201,168,76,0.12);
+      background: var(--obsidian);
+      padding: 2rem;
+      position: relative;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .pipeline-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(201,168,76,0.35);
+    }
+    .pipeline-card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+    .pipeline-layer {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 0.05em;
+    }
+    .pipeline-tag {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      padding: 0.25rem 0.7rem;
+      border: 1px solid;
+      text-transform: uppercase;
+    }
+    .tag-active   { border-color: var(--green); color: var(--green); }
+    .tag-progress { border-color: var(--gold);  color: var(--gold);  }
+
+    .pipeline-desc {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--gold-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .skill-item {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(201,168,76,0.06);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: #9a9790;
+    }
+    .skill-item:last-child { border-bottom: none; }
+    .skill-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .dot-done    { background: var(--green); box-shadow: 0 0 6px var(--green); }
+    .dot-active  { background: var(--gold);  box-shadow: 0 0 6px var(--gold);  }
+    .dot-planned { background: var(--muted); }
+
+    .skill-status {
+      margin-left: auto;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .s-done    { color: var(--green); }
+    .s-active  { color: var(--gold); }
+    .s-planned { color: var(--muted); }
+
+    /* Progress bar */
+    .pipeline-progress {
+      margin-top: 1.5rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .progress-bar {
+      flex: 1; height: 2px;
+      background: rgba(201,168,76,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(to right, var(--gold-dim), var(--gold));
+      transition: width 1s ease;
+    }
+    .progress-pct {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    /* ── TERMINAL PREVIEW ── */
+    .terminal-section { padding: 7rem 4rem; max-width: 1100px; margin: 0 auto; }
+    .terminal-box {
+      background: #080a0d;
+      border: 1px solid rgba(201,168,76,0.2);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      overflow: hidden;
+    }
+    .terminal-bar {
+      background: var(--obsidian-3);
+      padding: 0.75rem 1.2rem;
+      display: flex; align-items: center; gap: 0.5rem;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+    }
+    .t-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .td1 { background: #ff5f56; }
+    .td2 { background: #ffbd2e; }
+    .td3 { background: #27c93f; }
+    .t-title {
+      margin-left: auto; margin-right: auto;
+      font-size: 0.65rem; letter-spacing: 0.15em;
+      color: var(--muted);
+    }
+    .terminal-body { padding: 1.5rem 2rem; line-height: 2; }
+    .t-line { display: block; }
+    .t-prompt { color: var(--gold); }
+    .t-cmd    { color: var(--white); }
+    .t-out    { color: #6a9f6a; }
+    .t-err    { color: #9f6a6a; }
+    .t-info   { color: var(--muted); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid rgba(201,168,76,0.1);
+      padding: 2.5rem 4rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-name {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+    }
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+    }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+
+    /* ── FADE-IN ON SCROLL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.2rem; }
+      .hero { padding: 5rem 1.5rem 4rem; }
+      section { padding: 5rem 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .pipeline { grid-template-columns: 1fr; }
+      .skills-inner { padding: 0 1.5rem; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- ── NAVBAR ─────────────────────────────── -->
-<nav class="main-navbar">
-  <div class="nav-container">
-    <a href="index.html" class="nav-logo">Daniel Michael</a>
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">DM</a>
+    <ul class="nav-links">
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="resume.html">Resume</a></li>
+      <li><a href="labs.html">Cyber Labs</a></li>
+      <li><a href="terminal.html">Terminal</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
 
-    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
-      <span></span><span></span><span></span>
-    </button>
-
-    <div class="nav-links" id="nav-links">
-      <a href="projects.html"  class="nav-btn">Projects</a>
-      <a href="labs.html"      class="nav-btn">Cyber Labs</a>
-      <a href="courses.html"   class="nav-btn">Courses</a>
-      <a href="terminal.html"  class="nav-btn">Terminal</a>
-      <a href="siem.html"      class="nav-btn">SIEM</a>
-      <a href="resume.html"    class="nav-btn">Resume</a>
-      <a href="contact.html"   class="nav-btn">Contact</a>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-orb"></div>
+    <div class="hero-content">
+      <p class="hero-tag">Cybersecurity &amp; Computer Science Student</p>
+      <h1 class="hero-name">Daniel <span>Michael</span></h1>
+      <p class="hero-subtitle" id="typewriter"><span class="cursor"></span></p>
+      <div class="hero-badges">
+        <span class="badge">Georgia Tech · Work Study</span>
+        <span class="badge">FTC Robotics · Programmer</span>
+        <span class="badge">Cristo Rey Atlanta</span>
+      </div>
+      <a href="projects.html" class="hero-cta"><span>View My Projects →</span></a>
     </div>
-  </div>
-</nav>
-
-<!-- ── HERO ───────────────────────────────── -->
-<section class="hero" id="hero">
-  <div class="container" style="position:relative;z-index:1;">
-
-    <p class="hero-eyebrow">// daniel.michael @ cybersecurity</p>
-
-    <h1 class="hero-title">
-      Hi, I'm <span id="typed-name">Daniel</span>
-    </h1>
-
-    <p class="hero-sub" id="hero-tagline">Cybersecurity Student · Builder · Problem Solver</p>
-
-    <div class="hero-badges">
-      <span class="hero-badge">Georgia Tech Work Study</span>
-      <span class="hero-badge">FTC Robotics — 13th / Atlanta-Marist</span>
-      <span class="hero-badge">Cristo Rey Atlanta Jesuit</span>
-      <span class="hero-badge">10th Grade · Class of 2028</span>
-    </div>
-
-    <div class="hero-cta">
-      <a href="projects.html" class="btn-primary">View Projects</a>
-      <a href="resume.html"   class="btn-outline">Download Resume</a>
-    </div>
-
-    <!-- scroll hint -->
     <div class="scroll-hint">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="2">
-        <polyline points="6 9 12 15 18 9"/>
-      </svg>
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
     </div>
   </div>
-</section>
 
-<!-- ── ABOUT ──────────────────────────────── -->
-<section id="about">
-  <div class="container">
-    <div class="divider"></div>
-
-    <div class="row align-items-center g-5">
-      <div class="col-lg-6" data-aos="fade-right">
-        <span class="section-label">01 // who I am</span>
-        <h2 class="section-title">Building real <span>security</span> tools as a sophomore.</h2>
-        <p style="color:var(--text-muted);line-height:1.8;margin-bottom:16px;">
-          I'm a 10th grader at Cristo Rey Atlanta Jesuit High School on a direct path toward
-          Georgia Tech's Computer Science &amp; Cybersecurity program. My Corporate Work Study
-          placement is inside Georgia Tech's Dean of Engineering Office — which means I've
-          been working inside the same engineering environment I plan to study in.
-        </p>
-        <p style="color:var(--text-muted);line-height:1.8;">
-          I don't just take courses — I build. My portfolio features a live cyber operations
-          terminal, a SIEM log dashboard, a Python password analyzer with HIBP breach detection,
-          a network port scanner, and a simulated Arduino physical security system. These tools
-          talk to each other through a real JSON logging pipeline.
-        </p>
+  <!-- ABOUT -->
+  <section id="about" class="reveal">
+    <p class="section-label">01 // About</p>
+    <h2 class="section-title">Building at the Intersection<br>of Security &amp; Engineering</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm a sophomore at <strong>Cristo Rey Atlanta Jesuit High School</strong>, passionate about cybersecurity, robotics, and the systems that keep people safe in a connected world.</p>
+        <p>Through my work-study placement at <strong>Georgia Tech's Dean of Engineering Office</strong>, I've gained exposure to how engineering organizations operate at scale — and how security thinking fits into that picture.</p>
+        <p>Everything in this portfolio is something I built, broke, tested, or experimented with. I believe the best way to understand security is to <strong>think like both attacker and defender</strong> at the same time.</p>
       </div>
-
-      <div class="col-lg-6" data-aos="fade-left">
-        <div class="skill-section" style="padding:0;">
-          <div class="skill-box">
-            <div class="skill-label"><span>Python</span><span>82%</span></div>
-            <div class="skill-bar"><div class="skill-fill" style="--level:82%"></div></div>
-          </div>
-          <div class="skill-box">
-            <div class="skill-label"><span>HTML / CSS / JS</span><span>88%</span></div>
-            <div class="skill-bar"><div class="skill-fill" style="--level:88%"></div></div>
-          </div>
-          <div class="skill-box">
-            <div class="skill-label"><span>Linux & Networking</span><span>70%</span></div>
-            <div class="skill-bar"><div class="skill-fill" style="--level:70%"></div></div>
-          </div>
-          <div class="skill-box">
-            <div class="skill-label"><span>Cybersecurity (Offensive)</span><span>65%</span></div>
-            <div class="skill-bar"><div class="skill-fill" style="--level:65%"></div></div>
-          </div>
-          <div class="skill-box">
-            <div class="skill-label"><span>Cybersecurity (Defensive / SIEM)</span><span>75%</span></div>
-            <div class="skill-bar"><div class="skill-fill" style="--level:75%"></div></div>
-          </div>
-          <div class="skill-box">
-            <div class="skill-label"><span>Java / Arduino (Embedded)</span><span>60%</span></div>
-            <div class="skill-bar"><div class="skill-fill" style="--level:60%"></div></div>
-          </div>
+      <div class="about-stats">
+        <div class="stat-card">
+          <span class="stat-num">2+</span>
+          <span class="stat-label">Python Projects Built</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">Top 16</span>
+          <span class="stat-label">FTC Robotics · ATL League</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">GT</span>
+          <span class="stat-label">Dean of Engineering Office</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">2028</span>
+          <span class="stat-label">Graduation Year</span>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ── FEATURED PROJECTS ──────────────────── -->
-<section id="featured-projects">
-  <div class="container">
-    <div class="divider"></div>
-    <span class="section-label" data-aos="fade-up">02 // what I've built</span>
-    <h2 class="section-title" data-aos="fade-up">Featured <span>Projects</span></h2>
+  <!-- SKILL PIPELINE -->
+  <div class="skills-section">
+    <div class="skills-inner reveal">
+      <p class="section-label">02 // Skills</p>
+      <h2 class="section-title">Cybersecurity Skill Pipeline</h2>
+      <div class="pipeline">
 
-    <div class="card-grid">
-
-      <!-- Password Analyzer -->
-      <div class="project-card" data-aos="fade-up" data-aos-delay="0">
-        <h3>🔐 Password Strength Analyzer</h3>
-        <p>A Python cybersecurity tool that evaluates password strength using Shannon entropy, character-set scoring, and live HIBP breach detection via k-anonymity API.</p>
-        <div class="tech-tags">
-          <span class="tech-tag">Python</span>
-          <span class="tech-tag">Regex</span>
-          <span class="tech-tag">HIBP API</span>
-          <span class="tech-tag">SIEM Logging</span>
+        <!-- Foundational -->
+        <div class="pipeline-card">
+          <div class="pipeline-card-header">
+            <span class="pipeline-layer">Foundational Layer</span>
+            <span class="pipeline-tag tag-active">Active</span>
+          </div>
+          <p class="pipeline-desc">Linux · Networking · Security Basics</p>
+          <div class="skill-item">
+            <span class="skill-dot dot-done"></span>
+            TryHackMe – Pre-Security
+            <span class="skill-status s-done">Complete</span>
+          </div>
+          <div class="skill-item">
+            <span class="skill-dot dot-done"></span>
+            TryHackMe – Intro to Cyber
+            <span class="skill-status s-done">Complete</span>
+          </div>
+          <div class="skill-item">
+            <span class="skill-dot dot-active"></span>
+            OverTheWire – Bandit
+            <span class="skill-status s-active">In Progress</span>
+          </div>
+          <div class="pipeline-progress">
+            <div class="progress-bar"><div class="progress-fill" style="width:65%"></div></div>
+            <span class="progress-pct">65%</span>
+          </div>
         </div>
-        <div style="margin-top:10px;">
-          <span class="status-badge status-live">Live + SIEM Feed</span>
-        </div>
-        <a class="project-btn" href="https://github.com/danielmichael20208/password-strength-analyzer" target="_blank">GitHub →</a>
-      </div>
 
-      <!-- Port Scanner -->
-      <div class="project-card" data-aos="fade-up" data-aos-delay="100">
-        <h3>🛰️ Network Port Scanner</h3>
-        <p>TCP fingerprinting scanner with full port state enumeration (open / refused / filtered / timeout), banner grabbing, TTL extraction, and OS fingerprinting.</p>
-        <div class="tech-tags">
-          <span class="tech-tag">Python</span>
-          <span class="tech-tag">Sockets</span>
-          <span class="tech-tag">Fingerprinting</span>
-          <span class="tech-tag">SIEM Logging</span>
+        <!-- Applied -->
+        <div class="pipeline-card">
+          <div class="pipeline-card-header">
+            <span class="pipeline-layer">Applied Layer</span>
+            <span class="pipeline-tag tag-progress">In Progress</span>
+          </div>
+          <p class="pipeline-desc">Exploitation · Web Security · CTFs</p>
+          <div class="skill-item">
+            <span class="skill-dot dot-active"></span>
+            PicoCTF
+            <span class="skill-status s-active">In Progress</span>
+          </div>
+          <div class="skill-item">
+            <span class="skill-dot dot-planned"></span>
+            HackTheBox Academy
+            <span class="skill-status s-planned">Planned</span>
+          </div>
+          <div class="skill-item">
+            <span class="skill-dot dot-active"></span>
+            CyberDoor Hardware Lab
+            <span class="skill-status s-active">Active</span>
+          </div>
+          <div class="pipeline-progress">
+            <div class="progress-bar"><div class="progress-fill" style="width:30%"></div></div>
+            <span class="progress-pct">30%</span>
+          </div>
         </div>
-        <div style="margin-top:10px;">
-          <span class="status-badge status-live">Live + SIEM Feed</span>
-        </div>
-        <a class="project-btn" href="https://github.com/danielmichael20208/port-scanner" target="_blank">GitHub →</a>
-      </div>
 
-      <!-- CyberDoor -->
-      <div class="project-card" data-aos="fade-up" data-aos-delay="200">
-        <h3>🔒 Arduino CyberDoor v1</h3>
-        <p>Physical access control system: keypad PIN → servo lock → LED indicators → alarm + lockdown after 3 failures. Logs structured security events compatible with the SIEM pipeline.</p>
-        <div class="tech-tags">
-          <span class="tech-tag">Arduino C++</span>
-          <span class="tech-tag">Servo</span>
-          <span class="tech-tag">Keypad</span>
-          <span class="tech-tag">TinkerCAD Sim</span>
-        </div>
-        <div style="margin-top:10px;">
-          <span class="status-badge status-progress">Prototype / Sim</span>
-        </div>
-        <a class="project-btn" href="projects.html">See All Projects →</a>
-      </div>
-
-    </div><!-- /card-grid -->
-  </div>
-</section>
-
-<!-- ── CYBER LEARNING ROADMAP ─────────────── -->
-<section id="cyber-learning">
-  <div class="container">
-    <div class="divider"></div>
-    <span class="section-label" data-aos="fade-up">03 // certifications & learning</span>
-    <h2 class="section-title" data-aos="fade-up">Cyber <span>Learning Roadmap</span></h2>
-
-    <div class="roadmap-timeline" data-aos="fade-up">
-      <div class="timeline-item">Stage 1 — Foundation</div>
-      <div class="timeline-item">Stage 2 — Tools & Labs</div>
-      <div class="timeline-item">Stage 3 — Specialization</div>
-    </div>
-
-    <div class="row g-4 mt-2">
-      <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
-        <div class="tier-card">
-          <h4>Foundation</h4>
-          <ul>
-            <li>TryHackMe – Pre-Security Path</li>
-            <li>Cisco NetAcad – Networking Basics</li>
-            <li>Cisco NetAcad – Intro to Cybersecurity</li>
-            <li>IBM SkillsBuild – Cyber Fundamentals</li>
-            <li>Linux OverTheWire – Bandit</li>
-          </ul>
-          <div style="margin-top:12px;"><span class="status-badge status-progress">In Progress</span></div>
-        </div>
-      </div>
-      <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
-        <div class="tier-card">
-          <h4>Tools &amp; Labs</h4>
-          <ul>
-            <li>TryHackMe – Jr Pentester Path</li>
-            <li>PicoCTF – CTF Challenges</li>
-            <li>HackTheBox Academy – Free Tier</li>
-            <li>CyberDefenders – Blue Team Labs</li>
-            <li>CompTIA Security+ Prep (Prof. Messer)</li>
-          </ul>
-          <div style="margin-top:12px;"><span class="status-badge status-planned">Planned</span></div>
-        </div>
-      </div>
-      <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
-        <div class="tier-card">
-          <h4>Certification Goals</h4>
-          <ul>
-            <li>CompTIA Network+</li>
-            <li>CompTIA Security+</li>
-            <li>eJPT – Jr Penetration Tester (INE)</li>
-            <li>CCNA CyberOps (Cisco)</li>
-            <li>OSCP – Stretch Goal</li>
-          </ul>
-          <div style="margin-top:12px;"><span class="status-badge status-planned">Future</span></div>
-        </div>
-      </div>
-    </div>
-
-    <p class="text-center mt-4" style="color:var(--text-muted);font-size:0.85rem;">
-      All foundation and tools-tier courses are free. See the full roadmap on the
-      <a href="courses.html" style="color:var(--gold);">Courses page →</a>
-    </p>
-  </div>
-</section>
-
-<!-- ── STATS ──────────────────────────────── -->
-<section id="stats">
-  <div class="container">
-    <div class="divider"></div>
-    <div class="row text-center g-4" data-aos="fade-up">
-      <div class="col-6 col-md-3">
-        <p style="font-family:var(--font-head);font-size:2.8rem;font-weight:700;color:var(--gold);">3</p>
-        <p style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;">Cybersecurity Tools</p>
-      </div>
-      <div class="col-6 col-md-3">
-        <p style="font-family:var(--font-head);font-size:2.8rem;font-weight:700;color:var(--gold);">13th</p>
-        <p style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;">FTC Robotics Ranking</p>
-      </div>
-      <div class="col-6 col-md-3">
-        <p style="font-family:var(--font-head);font-size:2.8rem;font-weight:700;color:var(--gold);">GT</p>
-        <p style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;">Work Study Placement</p>
-      </div>
-      <div class="col-6 col-md-3">
-        <p style="font-family:var(--font-head);font-size:2.8rem;font-weight:700;color:var(--gold);">10th</p>
-        <p style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;">Grade · Class of 2028</p>
       </div>
     </div>
   </div>
-</section>
 
-<!-- ── FOOTER ─────────────────────────────── -->
-<footer>
-  <p>© 2026 <span>Daniel Michael</span> · Atlanta, GA ·
-    <a href="/cdn-cgi/l/email-protection#2165404f48444d0f6c48424940444d131113111961464c40484d0f424e4c" style="color:var(--gold);"><span class="__cf_email__" data-cfemail="682c0906010d044625010b00090d045a585a5850280f05090104460b0705">[email&#160;protected]</span></a>
-  </p>
-</footer>
+  <!-- TERMINAL PREVIEW -->
+  <div class="terminal-section reveal">
+    <p class="section-label">03 // System</p>
+    <h2 class="section-title">Current Status</h2>
+    <div class="terminal-box">
+      <div class="terminal-bar">
+        <div class="t-dot td1"></div>
+        <div class="t-dot td2"></div>
+        <div class="t-dot td3"></div>
+        <span class="t-title">daniel@portfolio ~ bash</span>
+      </div>
+      <div class="terminal-body">
+        <span class="t-line"><span class="t-prompt">daniel@portfolio:~$ </span><span class="t-cmd">whoami</span></span>
+        <span class="t-line t-out">daniel_michael — cybersecurity student, builder, curious person</span>
+        <span class="t-line"> </span>
+        <span class="t-line"><span class="t-prompt">daniel@portfolio:~$ </span><span class="t-cmd">cat current_projects.txt</span></span>
+        <span class="t-line t-out">[ACTIVE]  password-strength-analyzer  → v1.2 stable</span>
+        <span class="t-line t-out">[ACTIVE]  python-port-scanner          → SIEM integration WIP</span>
+        <span class="t-line t-out">[ACTIVE]  cyberdoor-hardware-lab       → embedded security research</span>
+        <span class="t-line"> </span>
+        <span class="t-line"><span class="t-prompt">daniel@portfolio:~$ </span><span class="t-cmd">echo $GOAL</span></span>
+        <span class="t-line t-out">Georgia Tech Cybersecurity / Information Security Track — Class of 2028</span>
+        <span class="t-line"> </span>
+        <span class="t-line"><span class="t-prompt">daniel@portfolio:~$ </span><span class="t-cmd cursor-line">_</span></span>
+      </div>
+    </div>
+  </div>
 
-<!-- ── SCRIPTS ────────────────────────────── -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-<script>
-AOS.init({ duration: 900, once: true, easing: 'ease-out-cubic', offset: 60 });
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">Daniel Michael</span>
+    <div class="footer-links">
+      <a href="projects.html">Projects</a>
+      <a href="labs.html">Labs</a>
+      <a href="contact.html">Contact</a>
+      <a href="https://github.com/danielmichael20208" target="_blank">GitHub</a>
+    </div>
+    <span class="footer-copy">© 2026 — All rights reserved</span>
+  </footer>
 
-// Mobile nav toggle
-document.getElementById('nav-toggle').addEventListener('click', () => {
-  document.getElementById('nav-links').classList.toggle('open');
-});
+  <script>
+    // TYPEWRITER
+    const phrases = [
+      'Cybersecurity Student & Builder',
+      'Python · Linux · Networking',
+      'Red Team Thinker. Blue Team Builder.',
+      'Georgia Tech Work Study · Class of 2028',
+    ];
+    let pi = 0, ci = 0, deleting = false;
+    const el = document.getElementById('typewriter');
 
-// Navbar active highlight
-const current = location.pathname.split('/').pop() || 'index.html';
-document.querySelectorAll('.nav-btn').forEach(btn => {
-  if (btn.getAttribute('href') === current) btn.classList.add('active');
-});
+    function type() {
+      const phrase = phrases[pi];
+      if (!deleting) {
+        el.innerHTML = phrase.slice(0, ci + 1) + '<span class="cursor"></span>';
+        ci++;
+        if (ci === phrase.length) { deleting = true; setTimeout(type, 1800); return; }
+        setTimeout(type, 55);
+      } else {
+        el.innerHTML = phrase.slice(0, ci - 1) + '<span class="cursor"></span>';
+        ci--;
+        if (ci === 0) {
+          deleting = false;
+          pi = (pi + 1) % phrases.length;
+          setTimeout(type, 400);
+          return;
+        }
+        setTimeout(type, 28);
+      }
+    }
+    setTimeout(type, 1200);
 
-// Simple typing animation for tagline
-const taglines = [
-  'Cybersecurity Student · Builder · Problem Solver',
-  'Red Team & Blue Team · Python · Arduino',
-  'FTC Robotics · Georgia Tech Work Study',
-  'Future CS / Cybersecurity Engineer'
-];
-let ti = 0, ci = 0, deleting = false;
-const el = document.getElementById('hero-tagline');
-function typeLoop() {
-  const str = taglines[ti];
-  if (!deleting) {
-    el.textContent = str.slice(0, ci++);
-    if (ci > str.length) { deleting = t
+    // SCROLL REVEAL
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

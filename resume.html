@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resume | Daniel Michael</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .resume-layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    /* Download card */
+    .download-card {
+      border: 1px solid rgba(201,168,76,0.2);
+      background: var(--obsidian-2);
+      padding: 2rem;
+      position: sticky; top: 6rem;
+    }
+    .download-card-title {
+      font-family: var(--font-display);
+      font-size: 1rem; font-weight: 600; letter-spacing: 0.05em;
+      color: var(--white); margin-bottom: 0.5rem;
+    }
+    .download-card-sub {
+      font-family: var(--font-mono);
+      font-size: 0.68rem; color: var(--muted); letter-spacing: 0.1em;
+      margin-bottom: 1.5rem; line-height: 1.6;
+    }
+    .btn-download {
+      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+      width: 100%;
+      font-family: var(--font-mono);
+      font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+      text-decoration: none;
+      color: var(--obsidian); background: var(--gold);
+      padding: 0.85rem 1.5rem;
+      position: relative; overflow: hidden;
+      transition: background 0.25s;
+      margin-bottom: 1rem;
+    }
+    .btn-download:hover { background: var(--gold-light); }
+    .btn-secondary {
+      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+      width: 100%;
+      font-family: var(--font-mono);
+      font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+      text-decoration: none;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.3);
+      padding: 0.8rem 1.5rem;
+      transition: border-color 0.25s, color 0.25s;
+    }
+    .btn-secondary:hover { border-color: var(--gold); color: var(--gold-light); }
+
+    .download-meta {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(201,168,76,0.1);
+    }
+    .meta-row {
+      display: flex; justify-content: space-between;
+      font-family: var(--font-mono); font-size: 0.65rem;
+      color: var(--muted); padding: 0.3rem 0;
+      border-bottom: 1px solid rgba(201,168,76,0.05);
+    }
+    .meta-row:last-child { border-bottom: none; }
+    .meta-row span:last-child { color: var(--gold-dim); }
+
+    /* Timeline */
+    .timeline { position: relative; }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--gold-dim), transparent);
+    }
+
+    .timeline-section { margin-bottom: 3.5rem; }
+    .timeline-section-title {
+      font-family: var(--font-display);
+      font-size: 1rem; font-weight: 600; letter-spacing: 0.08em;
+      color: var(--gold); margin-bottom: 1.5rem;
+      padding-left: 1.5rem; position: relative;
+    }
+    .timeline-section-title::before {
+      content: '';
+      position: absolute; left: -4px; top: 50%;
+      transform: translateY(-50%);
+      width: 9px; height: 9px;
+      background: var(--gold); border-radius: 50%;
+      box-shadow: 0 0 8px var(--gold);
+    }
+
+    .timeline-item {
+      padding: 1.5rem 1.5rem 1.5rem 2.5rem;
+      margin-left: 0;
+      border: 1px solid rgba(201,168,76,0.08);
+      background: var(--obsidian-2);
+      margin-bottom: 1rem;
+      position: relative;
+      transition: border-color 0.3s;
+    }
+    .timeline-item:hover { border-color: rgba(201,168,76,0.25); }
+    .timeline-item::before {
+      content: '';
+      position: absolute; left: -5px; top: 1.6rem;
+      width: 9px; height: 9px;
+      background: var(--obsidian-3);
+      border: 1px solid var(--gold-dim);
+      border-radius: 50%;
+    }
+
+    .item-header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 1rem; margin-bottom: 0.35rem;
+    }
+    .item-title {
+      font-family: var(--font-display);
+      font-size: 0.95rem; font-weight: 600; letter-spacing: 0.04em; color: var(--white);
+    }
+    .item-date {
+      font-family: var(--font-mono);
+      font-size: 0.62rem; letter-spacing: 0.1em; color: var(--gold-dim);
+      white-space: nowrap; flex-shrink: 0; margin-top: 0.1rem;
+    }
+    .item-org {
+      font-family: var(--font-mono);
+      font-size: 0.72rem; color: var(--gold); letter-spacing: 0.1em;
+      margin-bottom: 0.75rem;
+    }
+    .item-desc {
+      font-size: 0.85rem; line-height: 1.75; color: #9a9790;
+    }
+    .item-skills {
+      display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem;
+    }
+    .skill-chip {
+      font-family: var(--font-mono);
+      font-size: 0.58rem; letter-spacing: 0.1em;
+      padding: 0.15rem 0.5rem;
+      background: rgba(201,168,76,0.06);
+      border: 1px solid rgba(201,168,76,0.15);
+      color: var(--muted); text-transform: uppercase;
+    }
+
+    @media (max-width: 900px) {
+      .resume-layout { grid-template-columns: 1fr; }
+      .download-card { position: static; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">DM</a>
+    <ul class="nav-links">
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="resume.html" class="active">Resume</a></li>
+      <li><a href="labs.html">Cyber Labs</a></li>
+      <li><a href="terminal.html">Terminal</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-hero">
+    <div class="page-hero-grid"></div>
+    <div class="page-hero-content">
+      <p class="page-tag">03 // Resume</p>
+      <h1 class="page-title">Experience &amp; <span>Background</span></h1>
+      <p class="page-desc">Cybersecurity work, programming experience, robotics competitions, and work-study assignments. Updated as new projects and certifications are completed.</p>
+    </div>
+  </div>
+
+  <div class="page-content">
+    <div class="resume-layout reveal">
+
+      <!-- Timeline -->
+      <div class="timeline">
+
+        <!-- Education -->
+        <div class="timeline-section">
+          <p class="timeline-section-title">Education</p>
+
+          <div class="timeline-item">
+            <div class="item-header">
+              <span class="item-title">Cristo Rey Atlanta Jesuit High School</span>
+              <span class="item-date">2024 – 2028</span>
+            </div>
+            <p class="item-org">Sophomore · Class of 2028 · Atlanta, GA</p>
+            <p class="item-desc">Rigorous college-preparatory curriculum at a Jesuit institution emphasizing academic excellence and service. Pursuing coursework in mathematics, sciences, and computer science.</p>
+            <div class="item-skills">
+              <span class="skill-chip">Mathematics</span>
+              <span class="skill-chip">Chemistry</span>
+              <span class="skill-chip">Computer Science</span>
+              <span class="skill-chip">English</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Work Experience -->
+        <div class="timeline-section">
+          <p class="timeline-section-title">Work Experience</p>
+
+          <div class="timeline-item">
+            <div class="item-header">
+              <span class="item-title">Corporate Work Study Intern</span>
+              <span class="item-date">2024 – Present</span>
+            </div>
+            <p class="item-org">Georgia Tech · Dean of Engineering Office · Atlanta, GA</p>
+            <p class="item-desc">Placed at Georgia Tech's Dean of Engineering Office through Cristo Rey's Corporate Work Study Program. Gained hands-on exposure to how a top engineering institution operates at scale, including administrative processes, departmental coordination, and professional workplace standards.</p>
+            <div class="item-skills">
+              <span class="skill-chip">Professional Development</span>
+              <span class="skill-chip">Engineering Operations</span>
+              <span class="skill-chip">Georgia Tech</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Extracurriculars -->
+        <div class="timeline-section">
+          <p class="timeline-section-title">Extracurriculars</p>
+
+          <div class="timeline-item">
+            <div class="item-header">
+              <span class="item-title">FTC Robotics · Programmer</span>
+              <span class="item-date">2024 – Present</span>
+            </div>
+            <p class="item-org">Atlanta–Marist League · Top 16 Teams</p>
+            <p class="item-desc">Programmer for the school's FIRST Tech Challenge (FTC) robotics team. Responsible for writing and debugging autonomous and teleop control programs. The team ranks in the top 16 in the Atlanta–Marist League.</p>
+            <div class="item-skills">
+              <span class="skill-chip">Java</span>
+              <span class="skill-chip">FTC SDK</span>
+              <span class="skill-chip">Robotics</span>
+              <span class="skill-chip">Autonomous</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projects -->
+        <div class="timeline-section">
+          <p class="timeline-section-title">Technical Projects</p>
+
+          <div class="timeline-item">
+            <div class="item-header">
+              <span class="item-title">Password Strength Analyzer</span>
+              <span class="item-date">2025 – Present</span>
+            </div>
+            <p class="item-org">Python · Cybersecurity Tool</p>
+            <p class="item-desc">Built a Python tool that analyzes password strength using entropy calculations, pattern detection, and SIEM-integrated JSON logging.</p>
+            <div class="item-skills">
+              <span class="skill-chip">Python</span><span class="skill-chip">Regex</span><span class="skill-chip">Security</span>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="item-header">
+              <span class="item-title">Python Port Scanner</span>
+              <span class="item-date">2025 – Present</span>
+            </div>
+            <p class="item-org">Python · Network Security Tool</p>
+            <p class="item-desc">Network scanning tool for TCP port probing, service identification, and SIEM dashboard integration for blue team analysis.</p>
+            <div class="item-skills">
+              <span class="skill-chip">Python</span><span class="skill-chip">TCP/IP</span><span class="skill-chip">Networking</span>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="item-header">
+              <span class="item-title">Arduino CyberDoor v1</span>
+              <span class="item-date">2025 – Present</span>
+            </div>
+            <p class="item-org">Arduino · Embedded Security · Prototype</p>
+            <p class="item-desc">Physical access control system with keypad PIN verification, servo-controlled locking, brute-force lockout, and alert logging.</p>
+            <div class="item-skills">
+              <span class="skill-chip">Arduino</span><span class="skill-chip">C++</span><span class="skill-chip">Embedded</span><span class="skill-chip">Hardware</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Download Card -->
+      <div class="download-card">
+        <p class="download-card-title">Download Resume</p>
+        <p class="download-card-sub">Full PDF resume including all experience, skills, and certifications. Updated regularly.</p>
+        <a href="resume.pdf" download class="btn-download">↓ Download PDF</a>
+        <a href="resume.pdf" target="_blank" class="btn-secondary">↗ View in Browser</a>
+        <div class="download-meta">
+          <div class="meta-row"><span>Format</span><span>PDF</span></div>
+          <div class="meta-row"><span>Updated</span><span>2026</span></div>
+          <div class="meta-row"><span>Pages</span><span>1</span></div>
+          <div class="meta-row"><span>Language</span><span>English</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <span class="footer-name">Daniel Michael</span>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+      <a href="https://github.com/danielmichael20208" target="_blank">GitHub</a>
+    </div>
+    <span class="footer-copy">© 2026 — All rights reserved</span>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.05 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
